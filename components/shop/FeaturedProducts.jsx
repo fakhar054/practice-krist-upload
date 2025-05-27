@@ -6,33 +6,40 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-export default function FeaturedProducts({category, currency}) {
+export default function FeaturedProducts({ category, currency }) {
   const [products, setProducts] = useState();
-  // console.log(products, "relatd aa/////")
 
   useEffect(() => {
-      if (!category) return; // Skip API call if no category is selected
-  
-      const fetchProducts = async () => {
-        let apiUrl = `https://foundation.alphalive.pro/api/front/products/category/${category}`;
-  
-        try {
-          const response = await fetch(apiUrl);
-          const data = await response.json();
-          console.log(data, "API Response");
-  
-          if (data.status && Array.isArray(data.data)) {
-            setProducts(data.data);
-          } else {
-            throw new Error("Invalid API response structure");
-          }
-        } catch (error) {
-          console.error("Error fetching products:", error);
+    if (!category) return;
+    const fetchProducts = async () => {
+      let apiUrl = `https://foundation.alphalive.pro/api/front/products/category/${category}`;
+
+      try {
+        const response = await fetch(apiUrl);
+        const data = await response.json();
+        console.log(data, "API Response");
+
+        if (data.status && Array.isArray(data.data)) {
+          setProducts(data.data);
+        } else {
+          throw new Error("Invalid API response structure");
         }
-      };
-  
-      fetchProducts();
-    }, [category]);
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      }
+    };
+
+    fetchProducts();
+  }, [category]);
+
+  //this function counts word and then add ...
+  function formatTitle(title, wordLimit = 6) {
+    if (!title) return "";
+    const words = title.split(" ");
+    return words.length > wordLimit
+      ? words.slice(0, wordLimit).join(" ") + "..."
+      : title;
+  }
 
   return (
     <div className="featured-products-panel panel featured_products_panel mt-4 ">
@@ -84,6 +91,11 @@ export default function FeaturedProducts({category, currency}) {
                         width={1280}
                         height={1707}
                         alt="Elegant Watch"
+                        unoptimized
+                        onError={(e) => {
+                          e.currentTarget.src =
+                            "/assets/images/dummy-image.png";
+                        }}
                       />
                       <Link
                         href={`/shop-product-detail/${elm?.id}`}
@@ -91,47 +103,28 @@ export default function FeaturedProducts({category, currency}) {
                         data-caption="Elegant Watch"
                       ></Link>
                     </figure>
-                    {/* {elm?.previous_price && (
-                      <span className="position-absolute top-0 start-0 m-1 fs-7 ft-tertiary lh-sm h-16px px-narrow rounded bg-yellow-400 text-dark">
-                        {elm?.previous_price}
-                      </span>
-                    )} */}
                   </div>
                   <div className="content vstack  gap-1 fs-6  xl:mt-1">
                     <div className="my_content_div">
-                      <h4>{elm?.title}</h4>
+                      <h4>{formatTitle(elm?.title)}</h4>
                       <p className="description">{elm?.category_name}</p>
                       <div className="prices">
                         <div className="new_price">
-                          <p>{currency?.sign}{elm?.current_price}</p>
+                          <p>
+                            {currency?.sign}
+                            {elm?.current_price}
+                          </p>
                         </div>
                         <div className="old_price">
                           <p className="text-muted">
-                            <del>{currency?.sign}{elm?.previous_price}</del>
+                            <del>
+                              {currency?.sign}
+                              {elm?.previous_price}
+                            </del>
                           </p>
                         </div>
                       </div>
                     </div>
-                    {/* <h5 className="h6 lg:h5 m-0">
-                      <Link
-                        className="text-none"
-                        href={`/shop-product-detail/${elm.id}`}
-                      >
-                        {elm.title}
-                      </Link>
-                    </h5>
-                    <ul
-                      className="nav-x gap-0 text-gray-100 dark:text-gray-700"
-                      title="Average 5 out of 5"
-                    ></ul>
-                    <div className="hstack justify-center gap-narrow fs-7">
-                      {elm.oldPrice && (
-                        <span className="price-old text-line-through opacity-40">
-                          ${elm.oldPrice}
-                        </span>
-                      )}
-                      <span className="price">${elm.price}</span>
-                    </div> */}
                   </div>
                 </div>
               </article>

@@ -1,6 +1,12 @@
 "use client";
 import "./style.css";
-import { FaRegHeart, FaHeart, FaArrowLeft, FaArrowRight, FaAngleDown } from "react-icons/fa";
+import {
+  FaRegHeart,
+  FaHeart,
+  FaArrowLeft,
+  FaArrowRight,
+  FaAngleDown,
+} from "react-icons/fa";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
 import useAllProducts from "../../app/all-products/All_ProductResponse_Api";
@@ -12,9 +18,9 @@ export default function AllProduct() {
   // console.log(productsFilter, "page filters??????");
   // const { products } = useContext(ResponseContext);
 
-
   // const [showPopup, setShowPopup] = useState(false);
-  const { addToCart, products, loading, currency } = useContext(ResponseContext);
+  const { addToCart, products, loading, currency } =
+    useContext(ResponseContext);
   // console.log(products, 'prodycts all')
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -23,7 +29,6 @@ export default function AllProduct() {
 
   const [productss, setProducts] = useState([]);
   // console.log(productss, "Fetched products... mega menue");
-
 
   const fetchProducts = async () => {
     let apiUrl = `https://foundation.alphalive.pro/api/front/products/category/${category}`;
@@ -50,7 +55,8 @@ export default function AllProduct() {
   const itemsPerPage = 9;
 
   // const { products, loading } = useAllProducts(currentPage);
-  const { addToWishlist, removeFromWishlist, wishlist, searchQuery  } = useContext(ResponseContext);
+  const { addToWishlist, removeFromWishlist, wishlist, searchQuery } =
+    useContext(ResponseContext);
 
   // console.log(wishlist, "Wishlist items");
 
@@ -86,9 +92,8 @@ export default function AllProduct() {
     if (page >= 1 && page <= totalPages) setCurrentPage(page);
   };
 
-
   useEffect(() => {
-      fetchProducts();
+    fetchProducts();
   }, [category, subcategory]);
 
   const displayProducts = category ? productss : products;
@@ -101,21 +106,20 @@ export default function AllProduct() {
     currentPage * itemsPerPage
   );
 
-
   return (
     <>
       <div className="results_main mb-3">
         <div className="results">
           <div className="img_div">
-            <img src="/assets/images/common/showing.png" />
+            {/* <img src="/assets/images/common/showing.png" /> */}
             {/* <img src="/assets/images/common/results.png" /> */}
           </div>
           <p>{`Showing page ${currentPage} of ${totalPages}`}</p>
         </div>
-        <div className="results">
+        {/* <div className="results">
           <FaAngleDown />
           <p>Sort by latest</p>
-        </div>
+        </div> */}
       </div>
 
       {loading ? (
@@ -123,15 +127,37 @@ export default function AllProduct() {
         <div className="all_product_parent_div">
           {[...Array(6)].map((_, index) => (
             <section key={index} className="AllProduct pro_item mb-3">
-              <div className="img_div skeleton-box" style={{ height: "200px", width: "100%", borderRadius: "10px" }}></div>
-              <div className="skeleton-line mt-2" style={{ width: "80%", height: "20px", borderRadius: "4px" }}></div>
-              <div className="skeleton-line mt-1" style={{ width: "60%", height: "16px", borderRadius: "4px" }}></div>
+              <div
+                className="img_div skeleton-box"
+                style={{ height: "200px", width: "100%", borderRadius: "10px" }}
+              ></div>
+              <div
+                className="skeleton-line mt-2"
+                style={{ width: "80%", height: "20px", borderRadius: "4px" }}
+              ></div>
+              <div
+                className="skeleton-line mt-1"
+                style={{ width: "60%", height: "16px", borderRadius: "4px" }}
+              ></div>
               <div className="price_div">
-                <div className="skeleton-line" style={{ width: "40%", height: "16px", borderRadius: "4px" }}></div>
-                <div className="skeleton-line" style={{ width: "30%", height: "16px", borderRadius: "4px" }}></div>
+                <div
+                  className="skeleton-line"
+                  style={{ width: "40%", height: "16px", borderRadius: "4px" }}
+                ></div>
+                <div
+                  className="skeleton-line"
+                  style={{ width: "30%", height: "16px", borderRadius: "4px" }}
+                ></div>
               </div>
               <div className="btn_div mt-2">
-                <div className="skeleton-box" style={{ height: "30px", width: "100px", borderRadius: "20px" }}></div>
+                <div
+                  className="skeleton-box"
+                  style={{
+                    height: "30px",
+                    width: "100px",
+                    borderRadius: "20px",
+                  }}
+                ></div>
               </div>
             </section>
           ))}
@@ -155,19 +181,32 @@ export default function AllProduct() {
             };
 
             return (
-              <section key={index} id="AllProduct" className="AllProduct pro_item mb-3">
+              <section
+                key={index}
+                id="AllProduct"
+                className="AllProduct pro_item mb-3"
+              >
                 <div className="img_div">
                   <img
-                    src={product.thumbnail || "https://skala.or.id/wp-content/uploads/2024/01/dummy-post-square-1-1.jpg"}
+                    src={
+                      product.thumbnail ||
+                      "https://skala.or.id/wp-content/uploads/2024/01/dummy-post-square-1-1.jpg"
+                    }
                     onClick={() => handleNavigation(productId)}
                     alt="product"
                   />
                   {isLoggedIn ? (
                     <div>
                       {isFavorite ? (
-                        <FaHeart className="icon_size" onClick={toggleFavorite} />
+                        <FaHeart
+                          className="icon_size"
+                          onClick={toggleFavorite}
+                        />
                       ) : (
-                        <FaRegHeart className="icon_size" onClick={toggleFavorite} />
+                        <FaRegHeart
+                          className="icon_size"
+                          onClick={toggleFavorite}
+                        />
                       )}
                     </div>
                   ) : (
@@ -180,11 +219,21 @@ export default function AllProduct() {
                   </h2>
                   <p className="detail">{product.category_name}</p>
                   <div className="price_div">
-                    <p className="price">{currency?.sign}{product.current_price}</p>
-                    <p className="old_price">{product?.previous_price ? `${currency?.sign}${product.previous_price}` : ""}</p>
+                    <p className="price">
+                      {currency?.sign}
+                      {product.current_price}
+                    </p>
+                    <p className="old_price">
+                      {product?.previous_price
+                        ? `${currency?.sign}${product.previous_price}`
+                        : ""}
+                    </p>
                   </div>
                   <div className="btn_div">
-                    <button className="cart mt-1" onClick={() => addToCart(product)}>
+                    <button
+                      className="cart mt-1"
+                      onClick={() => addToCart(product)}
+                    >
                       Add to cart
                     </button>
                   </div>
@@ -195,20 +244,27 @@ export default function AllProduct() {
         </div>
       )}
 
-
-
       <div className="pagination mt-5 mb-5">
         <FaArrowLeft
           className={`icon_prop ${currentPage === 1 ? "disabled" : ""}`}
           onClick={prevPage}
         />
-        <p className={currentPage === 1 ? "active" : ""} onClick={() => goToPage(1)}>1</p>
+        <p
+          className={currentPage === 1 ? "active" : ""}
+          onClick={() => goToPage(1)}
+        >
+          1
+        </p>
         {currentPage > 3 && <p>...</p>}
         {Array.from({ length: 5 }, (_, i) => {
           let page = currentPage - 2 + i;
           if (page > 1 && page < totalPages) {
             return (
-              <p key={page} className={currentPage === page ? "active" : ""} onClick={() => goToPage(page)}>
+              <p
+                key={page}
+                className={currentPage === page ? "active" : ""}
+                onClick={() => goToPage(page)}
+              >
                 {page}
               </p>
             );
@@ -217,12 +273,17 @@ export default function AllProduct() {
         })}
         {currentPage < totalPages - 2 && <p>...</p>}
         {totalPages > 1 && (
-          <p className={currentPage === totalPages ? "active" : ""} onClick={() => goToPage(totalPages)}>
+          <p
+            className={currentPage === totalPages ? "active" : ""}
+            onClick={() => goToPage(totalPages)}
+          >
             {totalPages}
           </p>
         )}
         <FaArrowRight
-          className={`icon_prop ${currentPage === totalPages ? "disabled" : ""}`}
+          className={`icon_prop ${
+            currentPage === totalPages ? "disabled" : ""
+          }`}
           onClick={nextPage}
         />
       </div>

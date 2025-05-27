@@ -3,6 +3,24 @@
   align-items: center;
   margin-right: 30px;
 }
+
+.nav_main_width {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 14px;
+}
+.uc-navbar-nav {
+  display: flex;
+  justify-content: center;
+}
+.uc-navbar-nav li {
+  margin: 0 24px;
+}
+.uc-navbar-right {
+  margin-left: 0 !important;
+  width: 70%;
+}
 @media (max-width: 600px) {
   .icon_div_main {
     margin-right: 18px;
@@ -72,7 +90,7 @@
   cursor: pointer;
 }
 img.icon_size {
-  margin-left: 20px;
+  /* margin-left: 20px; */
 }
 
 @media (max-width: 600px) {
@@ -96,7 +114,7 @@ img.icon_size {
   width: 100%;
 }
 .increase_width_left {
-  width: 50%;
+  /* width: 30%; */
   justify-content: space-between;
 }
 
@@ -106,10 +124,9 @@ img.icon_size {
   }
 }
 
-
 .search_div {
   position: relative;
-  width: 0px; 
+  width: 0px;
   height: 40px;
   display: flex;
   align-items: center;
@@ -151,8 +168,6 @@ img.icon_size {
   opacity: 1;
 }
 
-
-
 .heart-container {
   position: relative;
   /* width: 60px;
@@ -177,14 +192,54 @@ img.icon_size {
   animation: orbit 2s linear infinite;
 }
 
-.dot1 { top: 0; left: 50%; background-color: #ff7171; animation-delay: 0s; }
-.dot2 { top: 14.64%; left: 85.36%; background-color: #377b37; animation-delay: 0.25s; }
-.dot3 { top: 50%; left: 100%; background-color: #afaf29; animation-delay: 0.5s; }
-.dot4 { top: 85.36%; left: 85.36%; background-color: #7a5afb; animation-delay: 0.75s; }
-.dot5 { top: 100%; left: 50%; background-color: #e62575; animation-delay: 1s; }
-.dot6 { top: 85.36%; left: 14.64%; background-color: #967e77; animation-delay: 1.25s; }
-.dot7 { top: 50%; left: 0; background-color: #d432c7; animation-delay: 1.5s; }
-.dot8 { top: 14.64%; left: 14.64%; background-color: #00bcd4; animation-delay: 1.75s; }
+.dot1 {
+  top: 0;
+  left: 50%;
+  background-color: #ff7171;
+  animation-delay: 0s;
+}
+.dot2 {
+  top: 14.64%;
+  left: 85.36%;
+  background-color: #377b37;
+  animation-delay: 0.25s;
+}
+.dot3 {
+  top: 50%;
+  left: 100%;
+  background-color: #afaf29;
+  animation-delay: 0.5s;
+}
+.dot4 {
+  top: 85.36%;
+  left: 85.36%;
+  background-color: #7a5afb;
+  animation-delay: 0.75s;
+}
+.dot5 {
+  top: 100%;
+  left: 50%;
+  background-color: #e62575;
+  animation-delay: 1s;
+}
+.dot6 {
+  top: 85.36%;
+  left: 14.64%;
+  background-color: #967e77;
+  animation-delay: 1.25s;
+}
+.dot7 {
+  top: 50%;
+  left: 0;
+  background-color: #d432c7;
+  animation-delay: 1.5s;
+}
+.dot8 {
+  top: 14.64%;
+  left: 14.64%;
+  background-color: #00bcd4;
+  animation-delay: 1.75s;
+}
 
 @keyframes orbit {
   0% {

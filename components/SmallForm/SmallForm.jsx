@@ -13,15 +13,13 @@ export default function SmallForm() {
     applyCoupon,
     couponCode,
     couponError,
-    currency
+    currency,
   } = useContext(ResponseContext);
 
   const [showDiscountInput, setShowDiscountInput] = useState(false);
   const handleToggleDiscountInput = () => {
-    setShowDiscountInput(prevState => !prevState);
+    setShowDiscountInput((prevState) => !prevState);
   };
-
-
 
   const getTotalAmount = () => {
     return cart?.reduce(
@@ -57,8 +55,7 @@ export default function SmallForm() {
               <img
                 width={"100%"}
                 src={
-                  item?.thumbnail ||
-                  "/assets/images/products/checkout_pic.png"
+                  item?.thumbnail || "/assets/images/products/checkout_pic.png"
                 }
                 alt="Product"
               />
@@ -69,25 +66,30 @@ export default function SmallForm() {
                 Quantity: {item?.quantity || "N/A"}
               </p>
               <p className="prod_title p-0 m-0">
-                Price: {currency?.sign}{Number(item?.current_price).toFixed(2)}
+                Price: {currency?.sign}
+                {Number(item?.current_price).toFixed(2)}
               </p>
               <div className="delete_div">
                 <div>
                   {item?.size && item?.size.length > 0 && (
                     <p className="sizes">
-                      Size: {Array.isArray(item.size) ? item.size[0] : item.size}
+                      Size:{" "}
+                      {Array.isArray(item.size) ? item.size[0] : item.size}
                     </p>
                   )}
 
                   {item?.color && item?.color.length > 0 && (
                     <p className="sizes">
-                      Color: {Array.isArray(item.color) ? item.color[0] : item.color}
+                      Color:{" "}
+                      {Array.isArray(item.color) ? item.color[0] : item.color}
                     </p>
                   )}
                 </div>
                 <RiDeleteBin5Fill
                   className="icon_prop"
-                  onClick={() => removeFromCart(item?.id, item?.color, item?.size)}
+                  onClick={() =>
+                    removeFromCart(item?.id, item?.color, item?.size)
+                  }
                 />
               </div>
             </div>
@@ -104,16 +106,25 @@ export default function SmallForm() {
           <div className="d-flex gap-1">
             {discountAmount > 0 && (
               <span style={{ textDecoration: "line-through" }}>
-                {currency?.sign}{discountAmount.toFixed(2)}
-              </span>)}
-            <span id="subtotal"> {currency?.sign}{subtotal.toFixed(2)}</span>
+                {currency?.sign}
+                {discountAmount.toFixed(2)}
+              </span>
+            )}
+            <span id="subtotal">
+              {" "}
+              {currency?.sign}
+              {subtotal.toFixed(2)}
+            </span>
           </div>
         </div>
         <div className="mb-3 d-flex space_between">
           <label htmlFor="subtotal" className="form-label mb-0 fw-bold">
             VAT 22%
           </label>
-          <span id="subtotal">{currency?.sign}{(subtotal * 0.22).toFixed(2)}</span>
+          <span id="subtotal">
+            {currency?.sign}
+            {(subtotal * 0.22).toFixed(2)}
+          </span>
         </div>
 
         <div className="mb-3 d-flex space_between pb-3">
@@ -124,7 +135,10 @@ export default function SmallForm() {
           >
             Delivery Charges
           </label>
-          <span id="delivery">{currency?.sign}{deliveryFee.toFixed(2)}</span>
+          <span id="delivery">
+            {currency?.sign}
+            {deliveryFee.toFixed(2)}
+          </span>
         </div>
 
         {/* {discountAmount > 0 && (
@@ -138,10 +152,10 @@ export default function SmallForm() {
 
         <p
           style={{
-            textAlign: "center",
+            textAlign: "left",
             color: "#000",
             textDecoration: "underline",
-            cursor: "pointer"
+            cursor: "pointer",
           }}
           className="my-1"
           onClick={handleToggleDiscountInput}
@@ -174,13 +188,13 @@ export default function SmallForm() {
           </>
         )}
 
-
         <div className="d-flex space_between">
           <label htmlFor="grandTotal" className="form-label mb-0 fw-bold">
             Grand Total
           </label>
           <span id="grandTotal" className="fw-bold">
-            {currency?.sign}{(Number(subtotal * 0.22) + Number(grandTotal)).toFixed(2)}
+            {currency?.sign}
+            {(Number(subtotal * 0.22) + Number(grandTotal)).toFixed(2)}
           </span>
         </div>
       </form>

@@ -1,3 +1,11 @@
+.uc-navbar-nav {
+  /* display: none !important; */
+  background-color: #f6f6f6;
+  height: 50px;
+  align-items: center;
+  /* box-shadow: 2px 3px 5px rgba(0, 0, 0, 0.5);  */
+}
+
 li.uc-nav-header {
   font-size: 14px;
   font-weight: 700;
@@ -18,7 +26,7 @@ li a.inActiveMenu {
 .custom_width {
   width: 80%;
   position: absolute !important;
-  top: 60px !important;
+  top: 143px !important;
   left: 50% !important;
   transform: translateX(-50%) !important;
   visibility: hidden;

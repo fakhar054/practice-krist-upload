@@ -8,21 +8,39 @@ import { openMobileMenu } from "@/utlis/toggleMobileMenu";
 import { openContactModal } from "@/utlis/toggleContactModal";
 import LanguageSelect2 from "../common/LanguageSelect2";
 import "./style_header.css";
-// uc-header header-default uc-navbar-sticky-wrap z-999 uc-sticky uc-sticky-below uc-sticky-fixed
-// --uc-nav-height: 80px; position: fixed !important; width: 1205px !important; margin-top: 0px !important; top: 0px;
 import { CiSearch } from "react-icons/ci";
 import { CiHeart } from "react-icons/ci";
 import CardComponent from "../CardComponent/page";
-import { toast, Toaster } from "react-hot-toast"
+import { toast, Toaster } from "react-hot-toast";
 import { FaHeart, FaSearch } from "react-icons/fa";
 import { ResponseContext } from "@/app/login/ResponseContext";
 import { FaPerson } from "react-icons/fa6";
 import "./navbar.css";
+import { useRouter } from "next/navigation";
 
 export default function Header2() {
   const [showSearch, setShowSearch] = useState(false);
+  const timeoutRef = useRef(null);
+  const router = useRouter();
+
+  const goToCart = () => {
+    router.push("/shop-cart");
+  };
+
+  const handleMouseLeaveAccount = () => {
+    timeoutRef.current = setTimeout(() => {
+      // setOpen(false);
+    }, 1000);
+  };
   // const [showPopup, setShowPopup] = useState(false);
-  const { cart, showPopup, setShowPopup, animateWishlist, setAnimateWishlist, setting } = useContext(ResponseContext);
+  const {
+    cart,
+    showPopup,
+    setShowPopup,
+    animateWishlist,
+    setAnimateWishlist,
+    setting,
+  } = useContext(ResponseContext);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -47,7 +65,7 @@ export default function Header2() {
       localStorage.removeItem("token");
       sessionStorage.clear();
       setIsLoggedIn(false);
-      toast.success('User Logout Successfully!')
+      toast.success("User Logout Successfully!");
     }
   };
 
@@ -75,7 +93,15 @@ export default function Header2() {
     };
   }, [prevScrollPos]);
 
-  const { wishlist, setSearchQuery } = useContext(ResponseContext);
+  const {
+    wishlist,
+    setSearchQuery,
+    searchQuery,
+    searchedProducts,
+    searchedLoading,
+  } = useContext(ResponseContext);
+  console.log("The list of searchedProducts is ::", searchedProducts);
+  // console.log("The searchedPorudct is  ::", searchedLoading);
 
   const [open, setOpen] = useState(false);
   const dropdownRef = useRef(null);
@@ -91,7 +117,6 @@ export default function Header2() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-
   useEffect(() => {
     if (animateWishlist) {
       const timer = setTimeout(() => setAnimateWishlist(false), 500);
@@ -99,21 +124,22 @@ export default function Header2() {
     }
   }, [animateWishlist]);
 
+  ///shop-product-detail/
+
   return (
     <>
-      <Toaster
-        position="top-center"
-        reverseOrder={false}
-      />
+      <Toaster position="top-center" reverseOrder={false} />
       <header
         style={{ "--uc-nav-height": "80px !important" }}
-        className={`uc-header header-default uc-navbar-sticky-wrap z-999 uc-sticky ${scrollingUp ? " uc-sticky-below uc-sticky-fixed headerFixed" : ""
-          }`}
+        className={`uc-header header-default uc-navbar-sticky-wrap z-999 uc-sticky ${
+          scrollingUp ? " uc-sticky-below uc-sticky-fixed headerFixed" : ""
+        }`}
         data-uc-sticky="start: 100vh; show-on-up: true; animation: uc-animation-slide-top; sel-target: .uc-navbar-container; cls-active: uc-navbar-sticky; cls-inactive: uc-navbar-transparent; end: !*;"
       >
         <nav
-          className={`bg-white uc-navbar-container uc-navbar-float ft-tertiary z-1 ${scrollingUp ? "uc-navbar-sticky" : "uc-navbar-transparent"
-            } `}
+          className={`bg-white uc-navbar-container uc-navbar-float ft-tertiary z-1 ${
+            scrollingUp ? "uc-navbar-sticky" : "uc-navbar-transparent"
+          } `}
           data-anime="translateY: [-40, 0]; opacity: [0, 1]; easing: easeOutExpo; duration: 750; delay: 0;"
           style={{ transform: "translateY(0px)", opacity: 1 }}
         >
@@ -127,7 +153,7 @@ export default function Header2() {
                   <Link
                     className="panel text-none"
                     href={`/`}
-                    style={{ width: 140 }}
+                    // style={{ width: 140 }}
                   >
                     <Image
                       className="dark:d-none"
@@ -139,32 +165,50 @@ export default function Header2() {
                     />
                   </Link>
                 </div>
-                <ul className="uc-navbar-nav gap-3 xl:gap-4 d-none lg:d-flex fw-medium ms-2">
+                {/* <ul className="uc-navbar-nav gap-3 xl:gap-4 d-none lg:d-flex fw-medium ms-2">
                   <Nav />
-                </ul>
+                </ul> */}
               </div>
-              <div className="uc-navbar-right">
-                <div className="account-wrapper" ref={dropdownRef}>
-                  {isLoggedIn ? <p className="account-label" onClick={() => setOpen(!open)}>
-                    My Account
-                  </p> : <Link className="text-none fw-medium" href={`/login`}><p className="account-label">
-                    Login
-                  </p></Link>}
-                  {open && (
-                    <div className="account-dropdown">
-                      <Link href="/dashboard">Dashboard</Link>
-                      <Link href="/personal-info">Personal Information</Link>
-                      <Link href="/orders">Orders</Link>
-                      <Link href="/my-wishlist">Wishlist</Link>
-                      <Link href="/my-address">Addresses</Link>
-                      <Link href="/settings">Settings</Link>
-                      <Link href="/login" onClick={handleAuth}>Logout</Link>
-                    </div>
-                  )}
-                </div>
-                <div className="icon_div_main">
-                  <div className="icons">
-                    {/* <CiSearch
+              {/* <div className="uc-navbar-right"> */}
+              <div className="main_input_div">
+                <input
+                  type="text"
+                  placeholder="Search..."
+                  className=""
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                />
+
+                {searchQuery && (
+                  <ul className="dropdown">
+                    {searchedLoading ? (
+                      <li className="loading">Loading...</li>
+                    ) : searchedProducts.length > 0 ? (
+                      searchedProducts.map((product, index) => (
+                        <li
+                          key={index}
+                          className="dropdown-item"
+                          onClick={() => {
+                            setSearchQuery("");
+                            router.push(`/shop-product-detail/${product.id}`);
+                          }}
+                          // onClick={() =>
+                          //   router.push(`/shop-product-detail/${product.id}`)
+                          // }
+                        >
+                          {product.title}
+                        </li>
+                      ))
+                    ) : (
+                      <li className="no-results">No matches found</li>
+                    )}
+                  </ul>
+                )}
+
+                <FaSearch className="search_icon_div" />
+              </div>
+              <div className="icon_div_main">
+                <div className="icons">
+                  {/* <CiSearch
                       className="icon_size icon_size_none cursor-pointer"
                       onClick={toggleSearch}
                     />
@@ -178,23 +222,39 @@ export default function Header2() {
                         onChange={(e) => setSearchQuery(e.target.value)}
                       />
                     </div> */}
-                    <div className="main_input_div">
-                      <input
-                        type="text"
-                        placeholder="Search..."
-                        className=""
-                        onChange={(e) => setSearchQuery(e.target.value)}
-                      />
-                      <FaSearch className="search_icon_div" />
+
+                  <div
+                    className="account-wrapper"
+                    ref={dropdownRef}
+                    onMouseEnter={() => setOpen(true)}
+                    onMouseLeave={() => setOpen(false)}
+                  >
+                    {isLoggedIn ? (
+                      <p className="account-label">My Account</p>
+                    ) : (
+                      <Link className="text-none fw-medium" href={`/login`}>
+                        <p className="account-label">Login</p>
+                      </Link>
+                    )}
+                    <div className="account-dropdown">
+                      <Link href="/dashboard">Dashboard</Link>
+                      <Link href="/personal-info">Personal Information</Link>
+                      <Link href="/orders">Orders</Link>
+                      <Link href="/my-wishlist">Wishlist</Link>
+                      <Link href="/my-address">Addresses</Link>
+                      <Link href="/settings">Settings</Link>
+                      <Link href="/login" onClick={handleAuth}>
+                        Logout
+                      </Link>
                     </div>
+                  </div>
 
-
-                    {/* {isLoggedIn? (<Link href="/personal-info">
+                  {/* {isLoggedIn? (<Link href="/personal-info">
                       <img className="icon_size cursor-pointer" style={{ marginLeft: "0px", width: "22px", height: "22px" }} src="/assets/images/user.png" alt="" />
                     </Link>) : ("")} */}
 
-
-                    {isLoggedIn ? (<Link href="/my-wishlist" >
+                  {isLoggedIn ? (
+                    <Link href="/my-wishlist">
                       {/* <CiHeart className="icon_size cursor-pointer" style={{ position: "relative" }} />
                       <span className="cart_counter">{wishlist ? wishlist?.length : "0"}</span> */}
                       <div className="relative heart-container">
@@ -212,40 +272,65 @@ export default function Header2() {
                         {animateWishlist ? (
                           <FaHeart
                             className="icon_size cursor-pointer transition-transform duration-300 scale-150 text-red-600"
-                            style={{ width: "40px", height: "40px" }}
+                            style={{ width: "30px", height: "30px" }}
                           />
                         ) : (
                           <CiHeart
                             className="icon_size cursor-pointer transition-transform duration-300"
-                            style={{ width: "40px", height: "40px" }}
+                            style={{ width: "30px", height: "30px" }}
                           />
                         )}
                       </div>
-
-                    </Link>) : (<Link href="/login" >
-                      <CiHeart className="icon_size cursor-pointer" style={{ position: "relative", width: "40px", height: "40px" }} />
+                    </Link>
+                  ) : (
+                    <Link href="/login">
+                      <CiHeart
+                        className="icon_size cursor-pointer"
+                        style={{
+                          position: "relative",
+                          width: "40px",
+                          height: "40px",
+                        }}
+                      />
                       {/* <span className="cart_counter">{wishlist ? wishlist?.length : "0"}</span> */}
-                    </Link>)}
-
-                  </div>
-                  <div className={`img_div `} onMouseEnter={handleMouseEnter}
-                    onMouseLeave={handleMouseLeave}>
+                    </Link>
+                  )}
+                  <div
+                    className={`img_div first_img_div`}
+                    onMouseEnter={handleMouseEnter}
+                    onMouseLeave={handleMouseLeave}
+                  >
                     <img
                       className="icon_size"
                       src="/assets/images/add-button.png"
                       alt=""
                     />
-                    <span className="cart_counter">{cart ? cart?.length : "0"}</span>
+                    <span className="cart_counter">
+                      {cart ? cart?.length : "0"}
+                    </span>
                     <div
-                      className={`pop_up_compoent ${showPopup ? "show_popup" : ""
-                        }`}
+                      className={`pop_up_compoent ${
+                        showPopup ? "show_popup" : ""
+                      }`}
                     >
                       <CardComponent />
                     </div>
                   </div>
-                </div>
 
-                {/* <div className="d-none lg:d-block" onClick={handleAuth}>
+                  <div className={`img_div second_img_div`} onClick={goToCart}>
+                    <img
+                      className="icon_size"
+                      src="/assets/images/add-button.png"
+                      alt=""
+                    />
+                    <span className="cart_counter">
+                      {cart ? cart?.length : "0"}
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* <div className="d-none lg:d-block" onClick={handleAuth}>
                   <Link className="text-none fw-medium " href={`/login`}>
                     
                     <span className="btn_black">
@@ -254,26 +339,29 @@ export default function Header2() {
                   </Link>
                 </div> */}
 
-                <a
-                  className="d-block lg:d-none uc-icon uc-navbar-toggle-icon"
-                  onClick={openMobileMenu}
-                >
-                  <svg width={20} height={20} viewBox="0 0 20 20">
-                    <style
-                      dangerouslySetInnerHTML={{
-                        __html:
-                          '.uc-navbar-toggle-icon svg>[class*="line-"]{transition:0.2s ease-in-out;transition-property:transform, opacity;transform-origin:center;opacity:1}.uc-navbar-toggle-icon svg>.line-3{opacity:0}.uc-navbar-toggle-animate[aria-expanded="true"] svg>.line-3{opacity:1}.uc-navbar-toggle-animate[aria-expanded="true"] svg>.line-2{transform:rotate(45deg)}.uc-navbar-toggle-animate[aria-expanded="true"] svg>.line-3{transform:rotate(-45deg)}.uc-navbar-toggle-animate[aria-expanded="true"] svg>.line-1,.uc-navbar-toggle-animate[aria-expanded="true"] svg>.line-4{opacity:0}.uc-navbar-toggle-animate[aria-expanded="true"] svg>.line-1{transform:translateY(6px) scaleX(0)}.uc-navbar-toggle-animate[aria-expanded="true"] svg>.line-4{transform:translateY(-6px) scaleX(0)}',
-                      }}
-                    />
-                    <rect className="line-1" y={3} width={20} height={2} />
-                    <rect className="line-2" y={9} width={20} height={2} />
-                    <rect className="line-3" y={9} width={20} height={2} />
-                    <rect className="line-4" y={15} width={20} height={2} />
-                  </svg>
-                </a>
-              </div>
+              <a
+                className="d-block lg:d-none uc-icon uc-navbar-toggle-icon"
+                onClick={openMobileMenu}
+              >
+                <svg width={20} height={20} viewBox="0 0 20 20">
+                  <style
+                    dangerouslySetInnerHTML={{
+                      __html:
+                        '.uc-navbar-toggle-icon svg>[class*="line-"]{transition:0.2s ease-in-out;transition-property:transform, opacity;transform-origin:center;opacity:1}.uc-navbar-toggle-icon svg>.line-3{opacity:0}.uc-navbar-toggle-animate[aria-expanded="true"] svg>.line-3{opacity:1}.uc-navbar-toggle-animate[aria-expanded="true"] svg>.line-2{transform:rotate(45deg)}.uc-navbar-toggle-animate[aria-expanded="true"] svg>.line-3{transform:rotate(-45deg)}.uc-navbar-toggle-animate[aria-expanded="true"] svg>.line-1,.uc-navbar-toggle-animate[aria-expanded="true"] svg>.line-4{opacity:0}.uc-navbar-toggle-animate[aria-expanded="true"] svg>.line-1{transform:translateY(6px) scaleX(0)}.uc-navbar-toggle-animate[aria-expanded="true"] svg>.line-4{transform:translateY(-6px) scaleX(0)}',
+                    }}
+                  />
+                  <rect className="line-1" y={3} width={20} height={2} />
+                  <rect className="line-2" y={9} width={20} height={2} />
+                  <rect className="line-3" y={9} width={20} height={2} />
+                  <rect className="line-4" y={15} width={20} height={2} />
+                </svg>
+              </a>
+              {/* </div> */}
             </div>
           </div>
+          <ul className="uc-navbar-nav gap-3 xl:gap-4 d-none lg:d-flex fw-medium ">
+            <Nav />
+          </ul>
         </nav>
       </header>
       {/* <div
