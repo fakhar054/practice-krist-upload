@@ -14,7 +14,7 @@ export default function Page() {
   return (
     <section id="all_product" className="all_product">
       <Header2 />
-      <div className="container margin_top" style={{ paddingTop: "100px" }}>
+      <div className="container margin_top" style={{ paddingTop: "166px" }}>
         <div className="row">
           <div className="col-md-12 col-lg-3">
             <Suspense fallback={<SkeletonLoader />}>

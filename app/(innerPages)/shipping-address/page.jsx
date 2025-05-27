@@ -513,6 +513,21 @@ export default function ShippingAddress() {
     </div>
   );
 
+  const renderInput2 = (id, label, type = "text") => (
+    <div className="col-lg-12 mb-3">
+      <label htmlFor={id}>{label}</label>
+      <input
+        type={type}
+        id={id}
+        className="form-control"
+        value={formData[id]}
+        onChange={handleChange}
+      />
+      {formErrors[id] && (
+        <small className="text-danger">{formErrors[id]}</small>
+      )}
+    </div>
+  );
   return (
     <>
       <Toaster position="top-center" reverseOrder={false} />
@@ -520,7 +535,7 @@ export default function ShippingAddress() {
         <div className="heading_div_2">
           <Header2 />
         </div>
-        <div className="container mb-3" style={{ paddingTop: "120px" }}>
+        <div className="container mb-3" style={{ paddingTop: "146px" }}>
           <div className="row">
             <h1>Shipping Address</h1>
             <div className="col-lg-8">
@@ -531,7 +546,7 @@ export default function ShippingAddress() {
                   {renderInput("email", "Email", "email")}
                   {!isLoggedIn &&
                     renderInput("password", "Password", "password")}
-                  <div className="col-lg-6 mb-3">
+                  <div className="col-lg-12 mb-3">
                     <label htmlFor="customer_type">For Customers</label>
                     <select
                       id="customer_type"
@@ -550,14 +565,16 @@ export default function ShippingAddress() {
                     )}
                   </div>
 
-                  {formData.customer_type === "0" &&
-                    renderInput("tax_code", "Tax Code")}
-                  {formData.customer_type === "1" && (
-                    <>
-                      {renderInput("company_name", "Company Name")}
-                      {renderInput("vat_number", "VAT Number")}
-                    </>
-                  )}
+                  <div className="col-lg-12">
+                    {formData.customer_type === "0" &&
+                      renderInput2("tax_code", "Tax Code")}
+                    {formData.customer_type === "1" && (
+                      <>
+                        {renderInput2("company_name", "Company Name")}
+                        {renderInput2("vat_number", "VAT Number")}
+                      </>
+                    )}
+                  </div>
 
                   <h6>Billing Address</h6>
                   {renderInput("billing_street", "Street Address")}

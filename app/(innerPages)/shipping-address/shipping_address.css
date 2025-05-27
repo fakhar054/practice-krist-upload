@@ -119,6 +119,9 @@ input::placeholder {
   padding: 10px 12px;
   border-radius: 11px;
 }
+/* input#tax_code {
+  width: 100%;
+} */
 .box_div h3 {
   font-size: 20px;
   font-weight: 700;

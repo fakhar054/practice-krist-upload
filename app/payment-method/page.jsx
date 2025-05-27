@@ -18,28 +18,25 @@ export default function PaymentMethod() {
     cart,
     setting,
     discountAmount,
-    formDataCheckout, // Make sure this is available in your context
+    formDataCheckout,
     setFormDataCheckout,
-    response_Context
+    response_Context,
   } = useContext(ResponseContext);
   const user_id = response_Context?.user?.id;
-
 
   const [loading, setLoading] = useState(false);
 
   const getTotalAmount = () => {
     return (
-      cart?.reduce(
-        (total, item) => total + item.current_price * item.quantity,
-        0
-      ).toFixed(2) || "0.00"
+      cart
+        ?.reduce((total, item) => total + item.current_price * item.quantity, 0)
+        .toFixed(2) || "0.00"
     );
   };
 
   const subtotal = parseFloat(getTotalAmount());
   const deliveryFee = Number(setting?.shipping_cost || 0);
-  const grandTotal =
-    subtotal - discountAmount + subtotal * 0.22 + deliveryFee;
+  const grandTotal = subtotal - discountAmount + subtotal * 0.22 + deliveryFee;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -103,36 +100,39 @@ export default function PaymentMethod() {
         };
       });
 
-      const totalQuantity = transformedItems.reduce((sum, item) => sum + item.quantity, 0);
+      const totalQuantity = transformedItems.reduce(
+        (sum, item) => sum + item.quantity,
+        0
+      );
       console.log("Total Quantity:", totalQuantity);
 
       const item_o = {
         full_name,
-            email,
-            password,
-            billing_street,
-            billing_city,
-            billing_country,
-            billing_phone,
-            billing_postal_code,
-            shipping_street,
-            shipping_city,
-            shipping_country,
-            shipping_phone,
-            shipping_postal_code,
-            customer_type,
-            tax_code,
-            company_name,
-            vat_number,
-            same_as,
-            items: transformedItems,
-            discount: discountAmount,
-            grand_total: grandTotal,
-            subtotal,
-            total_quantity: totalQuantity,
-            tax: subtotal * 0.22,
-            user_id
-      }
+        email,
+        password,
+        billing_street,
+        billing_city,
+        billing_country,
+        billing_phone,
+        billing_postal_code,
+        shipping_street,
+        shipping_city,
+        shipping_country,
+        shipping_phone,
+        shipping_postal_code,
+        customer_type,
+        tax_code,
+        company_name,
+        vat_number,
+        same_as,
+        items: transformedItems,
+        discount: discountAmount,
+        grand_total: grandTotal,
+        subtotal,
+        total_quantity: totalQuantity,
+        tax: subtotal * 0.22,
+        user_id,
+      };
 
       // console.log(item_o, "chk datatatata ");
 
@@ -166,17 +166,19 @@ export default function PaymentMethod() {
             subtotal,
             total_quantity: totalQuantity,
             tax: subtotal * 0.22,
-            user_id
+            user_id,
           }),
         }
       );
 
       const data = await response.json();
-      console.log(data, "checouttt,,t,t,t,t")
+      console.log("datatatadata.data", data.data);
+
+      console.log(data, "checouttt,,t,t,t,t");
       toast.error(data?.error?.message || "error");
       router.push(data.data);
     } catch (err) {
-      console.log("Something went wrong during checkout.")
+      console.log("Something went wrong during checkout.");
     } finally {
       setLoading(false);
     }
@@ -190,7 +192,7 @@ export default function PaymentMethod() {
   const handleBack = () => {
     setFormDataCheckout((prev) => ({
       ...prev,
-      items: cart
+      items: cart,
     }));
     router.back();
   };
@@ -206,7 +208,7 @@ export default function PaymentMethod() {
             <div className="row mb-4">
               <h3>Payment Method</h3>
 
-              <p onClick={handleBack} style={{ cursor: 'pointer' }}>
+              <p onClick={handleBack} style={{ cursor: "pointer" }}>
                 <span>&lt;</span> Back
               </p>
               <div className="col-lg-8">

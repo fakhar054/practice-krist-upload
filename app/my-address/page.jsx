@@ -164,7 +164,10 @@ export default function Page() {
             {addresses && addresses.length > 0 ? (
               addresses.map((addr) => (
                 <div className="address_parent_div pb-3 mb-3" key={addr.id}>
-                  <h3>{addr.name}</h3>
+                  <div className="name_div ">
+                    <h3>{addr.name}</h3>
+                    {addr?.isdefault === 1 ? <h6 id="default">Default</h6> : ""}
+                  </div>
                   <div className="address_div">
                     <div className="flex_div">
                       <p>
@@ -179,11 +182,11 @@ export default function Page() {
                       </p>
                     </div>
                     <div className="btn_div">
-                      {addr?.isdefault === 1 ? (
+                      {/* {addr?.isdefault === 1 ? (
                         <h6 id="default">Default</h6>
                       ) : (
                         ""
-                      )}
+                      )} */}
                       <button
                         className="edit"
                         onClick={() => handleEditClick(addr)}

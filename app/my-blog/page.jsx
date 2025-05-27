@@ -1,4 +1,3 @@
-
 // "use client";
 // import { useRouter, useSearchParams } from "next/navigation";
 // import React, { Suspense, useEffect, useState } from "react";
@@ -55,7 +54,6 @@
 
 //     fetchData();
 //   }, [slug]);
-
 
 //   const handleNavigation = (id) => {
 //     router.push(`/my-blog/${id}`);
@@ -202,7 +200,6 @@
 //   );
 // }
 
-
 "use client";
 import { useRouter, useSearchParams } from "next/navigation";
 import React, { Suspense, useEffect, useState } from "react";
@@ -269,7 +266,10 @@ function BlogPageContent() {
 
   return (
     <>
-      <section className="blog_section" style={{ backgroundColor: "lightgray" }}>
+      <section
+        className="blog_section"
+        style={{ backgroundColor: "lightgray", marginTop: "146px" }}
+      >
         <div className="heading_div">
           <Header2 />
         </div>
@@ -277,7 +277,7 @@ function BlogPageContent() {
           <div className="text-center">
             {slug && (
               <button className="btn btn-dark mb-2 text-uppercase">
-                {slug.replace(/-/g, ' ')}
+                {slug.replace(/-/g, " ")}
               </button>
             )}
           </div>
@@ -285,7 +285,7 @@ function BlogPageContent() {
             {loading
               ? [...Array(8)].map((_, index) => <SkeletonLoader key={index} />)
               : currentBlogs.length > 0
-                ? currentBlogs.map((card, index) => {
+              ? currentBlogs.map((card, index) => {
                   const words = card.details.split(" ");
                   const shortDetails =
                     words.length > 20
@@ -299,7 +299,11 @@ function BlogPageContent() {
                       </Link>
                       <div className="p-2">
                         <span>
-                          {card?.category} / {card?.created_at && new Date(card.created_at).toLocaleDateString("en-GB")}
+                          {card?.category}{" "}
+                          {card?.created_at &&
+                            new Date(card.created_at).toLocaleDateString(
+                              "en-GB"
+                            )}
                         </span>
                         <h3>{card.title}</h3>
                         <p onClick={() => handleNavigation(card?.id)}>
@@ -314,7 +318,8 @@ function BlogPageContent() {
                     </div>
                   );
                 })
-                : !loading && currentBlogs.length === 0 && (
+              : !loading &&
+                currentBlogs.length === 0 && (
                   <p className="alert alert-warning">No Blogs Found</p>
                 )}
           </div>
@@ -323,7 +328,9 @@ function BlogPageContent() {
             {Array.from({ length: totalPages }, (_, index) => (
               <button
                 key={index}
-                className={`page-btn ${currentPage === index + 1 ? "active" : ""}`}
+                className={`page-btn ${
+                  currentPage === index + 1 ? "active" : ""
+                }`}
                 onClick={() => setCurrentPage(index + 1)}
               >
                 {index + 1}
@@ -336,67 +343,69 @@ function BlogPageContent() {
 
       {/* Optional inline styling (move to your CSS file if preferred) */}
       <style jsx>{`
- .pagination-numbers {
-           display: flex;
-           justify-content: center;
-           gap: 8px;
-           margin-top: 20px;
-         }
+        .pagination-numbers {
+          display: flex;
+          justify-content: center;
+          gap: 8px;
+          margin-top: 20px;
+        }
 
-         .page-btn {
-           padding: 8px 12px;
-           border: 1px solid #ddd;
-           background-color: white;
-           cursor: pointer;
-           border-radius: 5px;
-           font-weight: 500;
-           transition: all 0.3s ease;
-         }
+        .page-btn {
+          padding: 8px 12px;
+          border: 1px solid #ddd;
+          background-color: white;
+          cursor: pointer;
+          border-radius: 5px;
+          font-weight: 500;
+          transition: all 0.3s ease;
+        }
 
-         .page-btn:hover {
-           background-color: #eee;
-         }
+        .page-btn:hover {
+          background-color: #eee;
+        }
 
-         .page-btn.active {
-           background-color: #333;
-           color: white;
-           border-color: #333;
-         }
-       `}</style>
+        .page-btn.active {
+          background-color: #333;
+          color: white;
+          border-color: #333;
+        }
+      `}</style>
 
       <style jsx>{`
-         .single_card.skeleton {
-           display: flex;
-           flex-direction: column;
-           gap: 10px;
-           width: 100%;
-           max-width: 300px;         }
+        .single_card.skeleton {
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+          width: 100%;
+          max-width: 300px;
+        }
 
-         .skeleton-image {
-           width: 100%;
-           height: 200px;
-           background-color: #ddd;
-           border-radius: 5px;
-         }
+        .skeleton-image {
+          width: 100%;
+          height: 200px;
+          background-color: #ddd;
+          border-radius: 5px;
+        }
 
-         .skeleton-title,
-         .skeleton-detail,
-         .skeleton-read-more {
-           background-color: #ddd;
-           height: 20px;
-           border-radius: 4px;         }
-         .skeleton-title {
-           width: 70%;
-         }
+        .skeleton-title,
+        .skeleton-detail,
+        .skeleton-read-more {
+          background-color: #ddd;
+          height: 20px;
+          border-radius: 4px;
+        }
+        .skeleton-title {
+          width: 70%;
+        }
 
-         .skeleton-detail {
-           width: 90%;
-         }
+        .skeleton-detail {
+          width: 90%;
+        }
 
-         .skeleton-read-more {
-           width: 50%;
-         }
-       `}</style>
+        .skeleton-read-more {
+          width: 50%;
+        }
+      `}</style>
     </>
   );
 }

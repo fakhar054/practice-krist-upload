@@ -30,7 +30,7 @@ body {
   height: 200px;
 }
 
-.single_card span{
+.single_card span {
   color: rgb(169, 169, 169);
 }
 
@@ -38,7 +38,6 @@ body {
   font-family: "Jost" !important ;
   margin-top: 12px;
 }
-
 
 .blogs_row p a {
   color: #000;
@@ -48,7 +47,7 @@ body {
 }
 
 .main_div {
-  margin-top: 80px;
+  margin-top: 146px;
 }
 .main_div .pagination {
   display: flex;
@@ -72,7 +71,7 @@ body {
   }
 }
 
-.right_sec li a{
+.right_sec li a {
   font-size: 18px;
   margin-bottom: 12px;
   font-weight: 500;
@@ -80,11 +79,12 @@ body {
   text-decoration: none;
 }
 
-.right_sec li{
+.right_sec li {
   margin-bottom: 12px;
 }
 
-.right_sec li:first-child, .right_sec li:hover{
+.right_sec li:first-child,
+.right_sec li:hover {
   color: #000;
 }
 
