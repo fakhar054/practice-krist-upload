@@ -8,6 +8,7 @@ export const ResponseContext = createContext();
 
 export const ResponseProvider = ({ children }) => {
   const [cart, setCart] = useState([]);
+  console.log("i am console..");
 
   useEffect(() => {
     const storedCart = JSON.parse(localStorage.getItem("cart")) || [];
