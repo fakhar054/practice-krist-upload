@@ -20,6 +20,8 @@ import { useRouter } from "next/navigation";
 
 export default function Header2() {
   const [showSearch, setShowSearch] = useState(false);
+  const dropdownReference = useRef(null);
+
   const timeoutRef = useRef(null);
   const router = useRouter();
 
@@ -124,8 +126,19 @@ export default function Header2() {
     }
   }, [animateWishlist]);
 
-  ///shop-product-detail/
+  //useEffect for close the dropdown when user click outside the search
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setSearchQuery(""); // Clear the dropdown
+      }
+    };
 
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [setSearchQuery]);
   return (
     <>
       <Toaster position="top-center" reverseOrder={false} />
@@ -179,7 +192,7 @@ export default function Header2() {
                 />
 
                 {searchQuery && (
-                  <ul className="dropdown">
+                  <ul className="dropdown" ref={dropdownRef}>
                     {searchedLoading ? (
                       <li className="loading">Loading...</li>
                     ) : searchedProducts.length > 0 ? (
