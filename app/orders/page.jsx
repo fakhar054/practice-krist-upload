@@ -13,7 +13,7 @@ import Link from "next/link";
 
 export default function Page() {
   const { orders, ordersData, response_Context } = useContext(ResponseContext);
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
 
@@ -25,12 +25,12 @@ export default function Page() {
 
   const formatDate = (isoString) => {
     const date = new Date(isoString);
-    const options = { day: '2-digit', month: 'short', year: 'numeric' };
-    return date.toLocaleDateString('en-US', options);
+    const options = { day: "2-digit", month: "short", year: "numeric" };
+    return date.toLocaleDateString("en-US", options);
   };
 
   const filteredOrders = useMemo(() => {
-    return ordersData?.filter(order =>
+    return ordersData?.filter((order) =>
       order?.number?.toLowerCase().includes(search.toLowerCase())
     );
   }, [search, ordersData]);
@@ -68,10 +68,10 @@ export default function Page() {
                   }}
                 />
                 <IoSearchOutline className="search_icon" />
-                <div className="filer_div">
+                {/* <div className="filer_div">
                   <p>Filter</p>
                   <BsFilter className="icon_filter" />
-                </div>
+                </div> */}
               </div>
             </div>
 
@@ -92,17 +92,27 @@ export default function Page() {
                       {paginatedOrders.map((order) => (
                         <tr key={order.id} className="border-t">
                           <td className="p-2">{order?.number}</td>
-                          <td className="p-2">{formatDate(order?.created_at)}</td>
+                          <td className="p-2">
+                            {formatDate(order?.created_at)}
+                          </td>
                           <td className="p-2">{order?.total}</td>
                           <td className="p-2">
-                            <span className={`px-2 rounded text-white ${order?.status === 'Completed' ? 'bg-green-500' : 'bg-yellow-500'}`}>
+                            <span
+                              className={`px-2 rounded text-white ${
+                                order?.status === "Completed"
+                                  ? "bg-green-500"
+                                  : "bg-yellow-500"
+                              }`}
+                            >
                               {order?.status}
                             </span>
                           </td>
                           <td className="p-2">
-                            <Link href={`/orders/orderDetail/${order?.id}`}><button className="btn btn-dark">
-                              View Order
-                            </button></Link>
+                            <Link href={`/orders/orderDetail/${order?.id}`}>
+                              <button className="btn btn-dark">
+                                View Order
+                              </button>
+                            </Link>
                           </td>
                         </tr>
                       ))}
@@ -113,18 +123,27 @@ export default function Page() {
                 {/* Pagination */}
                 <div className="flex justify-between items-center mt-4 flex-wrap gap-2">
                   <span>
-                    Showing {((currentPage - 1) * itemsPerPage) + 1} - {Math.min(currentPage * itemsPerPage, filteredOrders?.length)} of {filteredOrders?.length}
+                    Showing {(currentPage - 1) * itemsPerPage + 1} -{" "}
+                    {Math.min(
+                      currentPage * itemsPerPage,
+                      filteredOrders?.length
+                    )}{" "}
+                    of {filteredOrders?.length}
                   </span>
                   <div className="flex gap-2">
                     <button
-                      onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                      onClick={() =>
+                        setCurrentPage((prev) => Math.max(prev - 1, 1))
+                      }
                       disabled={currentPage === 1}
                       className="px-3 bg-gray-200 rounded disabled:opacity-50 text-white me-1"
                     >
                       Prev
                     </button>
                     <button
-                      onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+                      onClick={() =>
+                        setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+                      }
                       disabled={currentPage === totalPages}
                       className="px-3 bg-gray-200 rounded disabled:opacity-50 text-white"
                     >

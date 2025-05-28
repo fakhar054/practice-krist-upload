@@ -47,7 +47,6 @@ const useAuth = () => {
     }
   };
 
-  
   // ✅ Login User and Store in Context
   const login = async (email, password) => {
     setLoading(true);
@@ -77,8 +76,8 @@ const useAuth = () => {
           user_id: data.data.user.id,
         });
 
-        localStorage.setItem("token", data.data.token)
-        localStorage.setItem("userId", data.data.user.id)
+        localStorage.setItem("token", data.data.token);
+        localStorage.setItem("userId", data.data.user.id);
         toast.success("Login Successful!");
         router.push("/"); // Redirect to the website
         return data;
@@ -99,7 +98,7 @@ const useAuth = () => {
   const updateProfile = async (formDataToSend) => {
     setLoading(true);
     setError(null);
-  
+
     try {
       const res = await fetch(
         "https://foundation.alphalive.pro/api/user/profile/update",
@@ -112,15 +111,15 @@ const useAuth = () => {
           body: formDataToSend,
         }
       );
-  
+
       const data = await res.json();
       // setProfileData(data.data);
-      console.log("API Response profile:", data);
-  
+      console.log("updateddd API Response profile: ", data);
+
       if (!res.ok) {
         throw new Error(data.message || "Profile update failed");
       }
-  
+
       if (data.status === true) {
         toast.success("Profile Updated Successfully!");
         return data.data;
@@ -135,7 +134,6 @@ const useAuth = () => {
       setLoading(false);
     }
   };
-  
 
   const fetchDataOrder = async (userId) => {
     setLoading(true);
@@ -143,7 +141,7 @@ const useAuth = () => {
       const res = await fetch(
         `https://foundation.alphalive.pro/api/user/dashboard/${userId}`
       );
-      console.log(res, "response order ka")
+      console.log(res, "response order ka");
       const data = await res.json();
       return data;
     } catch (error) {
