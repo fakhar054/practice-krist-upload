@@ -31,14 +31,14 @@
   text-align: center;
 }
 
-.dropdown-item {
-  padding: 10px;
-  cursor: pointer;
-  border-bottom: 1px solid #eee;
-  height: 42px;
-  display: flex;
-  align-items: center;
-  padding-left: 25px;
+.main_input_div .dropdown-item {
+  padding: 10px !important;
+  cursor: pointer !important;
+  border-bottom: 1px solid #eee !important;
+  height: 42px !important;
+  display: flex !important;
+  align-items: center !important;
+  padding-left: 25px !important;
 }
 
 .dropdown-item:hover {
