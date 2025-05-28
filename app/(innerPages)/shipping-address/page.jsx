@@ -209,6 +209,22 @@ export default function ShippingAddress() {
     </div>
   );
 
+  const renderInput3 = (id, label, type = "text") => (
+    <div className="col-lg-12 mb-3">
+      <label htmlFor={id}>{label}</label>
+      <input
+        type={type}
+        id={id}
+        className="form-control"
+        value={formData[id]}
+        onChange={handleChange}
+      />
+      {formErrors[id] && (
+        <small className="text-danger">{formErrors[id]}</small>
+      )}
+    </div>
+  );
+
   const renderInput2 = (id, label, type = "text") => (
     <div className="col-lg-12 mb-3">
       <label htmlFor={id}>{label}</label>
@@ -241,7 +257,7 @@ export default function ShippingAddress() {
                   {renderInput("full_name", "Full Name")}
                   {renderInput("email", "Email", "email")}
                   {!isLoggedIn &&
-                    renderInput("password", "Password", "password")}
+                    renderInput3("password", "Password", "password")}
                   <div className="col-lg-12 mb-3">
                     <label htmlFor="customer_type">For Customers</label>
                     <select

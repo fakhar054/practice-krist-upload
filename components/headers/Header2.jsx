@@ -236,14 +236,16 @@ export default function Header2() {
                       />
                     </div> */}
 
-                  <div
-                    className="account-wrapper"
-                    ref={dropdownRef}
-                    onMouseEnter={() => setOpen(true)}
-                    onMouseLeave={() => setOpen(false)}
-                  >
+                  {/* <div className="account-wrapper">
                     {isLoggedIn ? (
-                      <p className="account-label">My Account</p>
+                      <p
+                        className="account-label"
+                        ref={dropdownRef}
+                        onMouseEnter={() => setOpen(true)}
+                        onMouseLeave={() => setOpen(false)}
+                      >
+                        My Account
+                      </p>
                     ) : (
                       <Link className="text-none fw-medium" href={`/login`}>
                         <p className="account-label">Login</p>
@@ -260,6 +262,34 @@ export default function Header2() {
                         Logout
                       </Link>
                     </div>
+                  </div> */}
+                  <div
+                    className="account-wrapper"
+                    onMouseEnter={() => setOpen(true)}
+                    onMouseLeave={() => setOpen(false)}
+                    ref={dropdownRef}
+                  >
+                    {isLoggedIn ? (
+                      <p className="account-label">My Account</p>
+                    ) : (
+                      <Link className="text-none fw-medium" href={`/login`}>
+                        <p className="account-label">Login</p>
+                      </Link>
+                    )}
+
+                    {isLoggedIn && open && (
+                      <div className="account-dropdown">
+                        <Link href="/dashboard">Dashboard</Link>
+                        <Link href="/personal-info">Personal Information</Link>
+                        <Link href="/orders">Orders</Link>
+                        <Link href="/my-wishlist">Wishlist</Link>
+                        <Link href="/my-address">Addresses</Link>
+                        <Link href="/settings">Settings</Link>
+                        <Link href="/login" onClick={handleAuth}>
+                          Logout
+                        </Link>
+                      </div>
+                    )}
                   </div>
 
                   {/* {isLoggedIn? (<Link href="/personal-info">

@@ -70,11 +70,11 @@
   padding: 10px 0;
 }
 
-.account-wrapper:hover .account-dropdown {
+/* .account-wrapper:hover .account-dropdown {
   display: block !important;
-}
+} */
 .account-dropdown {
-  display: none;
+  /* display: none; */
   position: absolute;
   cursor: pointer;
   top: 100%;

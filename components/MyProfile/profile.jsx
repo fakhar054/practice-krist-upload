@@ -49,7 +49,7 @@ export default function profile() {
 
       <section className="myProfile_parent_div mt-5">
         <h4>My Account</h4>
-        <hr className="w-100" />
+        {/* <hr className="w-100" /> */}
         {/* <div className="myProfile ">
           <div className="img_div">
             <img width={20} height={20} src={response_Context? response_Context.user?.propic : "/assets/images/common/profile_pic.png"} alt="profile" />
@@ -61,36 +61,41 @@ export default function profile() {
         </div> */}
         <div className="user_info">
           <div
-            className={`user flex_props ${pathname === "/dashboard" ? "bottom_border" : ""
-              }`}
+            className={`user flex_props ${
+              pathname === "/dashboard" ? "bottom_border" : ""
+            }`}
           >
             {/* <FaRegUser /> */}
             <p onClick={handleDashboardNavigation}>Dashboard</p>
           </div>
           <div
-            className={`user flex_props ${pathname === "/personal-info" ? "bottom_border" : ""
-              }`}
+            className={`user flex_props ${
+              pathname === "/personal-info" ? "bottom_border" : ""
+            }`}
           >
             {/* <FaRegUser /> */}
             <p onClick={handlePersonalNavigation}>Personal Information</p>
           </div>
           <div
-            className={`user flex_props ${pathname === "/orders" ? "bottom_border" : ""
-              }`}
+            className={`user flex_props ${
+              pathname === "/orders" ? "bottom_border" : ""
+            }`}
           >
             {/* <FaBorderAll /> */}
             <p onClick={handleOrders}>My Orders</p>
           </div>
           <div
-            className={`user flex_props ${pathname === "/my-wishlist" ? "bottom_border" : ""
-              }`}
+            className={`user flex_props ${
+              pathname === "/my-wishlist" ? "bottom_border" : ""
+            }`}
           >
             {/* <CiHeart /> */}
             <p onClick={handleWishlist}>My Wishlist</p>
           </div>
           <div
-            className={`user flex_props ${pathname === "/my-address" ? "bottom_border" : ""
-              }`}
+            className={`user flex_props ${
+              pathname === "/my-address" ? "bottom_border" : ""
+            }`}
           >
             {/* <IoLocationOutline /> */}
             <p onClick={handleAddress}>Manage Addresses</p>
@@ -112,8 +117,9 @@ export default function profile() {
             <p onClick={handleNotifications}>Notifications</p>
           </div> */}
           <div
-            className={`user flex_props ${pathname === "/settings" ? "bottom_border" : ""
-              }`}
+            className={`user flex_props ${
+              pathname === "/settings" ? "bottom_border" : ""
+            }`}
           >
             {/* <CiSettings /> */}
             <p onClick={handleSetting}>Settings</p>
