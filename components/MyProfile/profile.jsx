@@ -49,16 +49,7 @@ export default function profile() {
 
       <section className="myProfile_parent_div mt-5">
         <h4>My Account</h4>
-        {/* <hr className="w-100" /> */}
-        {/* <div className="myProfile ">
-          <div className="img_div">
-            <img width={20} height={20} src={response_Context? response_Context.user?.propic : "/assets/images/common/profile_pic.png"} alt="profile" />
-          </div>
-          <div className="info_div">
-            <p>{response_Context? response_Context.user?.full_name : "User Name"}</p>
-            <h6>{response_Context? response_Context.user?.email : "user email"}</h6>
-          </div>
-        </div> */}
+
         <div className="user_info">
           <div
             className={`user flex_props ${

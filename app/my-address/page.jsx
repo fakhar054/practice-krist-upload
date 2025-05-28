@@ -15,33 +15,18 @@ export default function Page() {
   const [isFormVisible, setIsFormVisible] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
   const [editAddress, setEditAddress] = useState(null);
+  const [userId, setUserId] = useState(null);
 
   const {
     addresses,
     deleteAddress,
     addAddress,
     updateAddress,
-    loading,
-    setAddresses,
-    response_Context,
     fetchAddresses,
   } = useContext(ResponseContext);
-  // const userId = response_Context?.user?.id || "No ID available";
-  // const userId = localStorage.getItem("userId") || "No ID available";
-  const [userId, setUserId] = useState(null);
-  const defaultAddress = addresses.find((address) => address.isdefault === 1);
-
-  // console.log(defaultAddress, "ho gia id");
-
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const id = localStorage.getItem("userId");
-      setUserId(id || "No ID available");
-    }
-  }, []);
 
   const [newAddress, setNewAddress] = useState({
-    user_id: userId,
+    user_id: "",
     name: "",
     phone: "",
     street_address: "",
@@ -50,8 +35,24 @@ export default function Page() {
     zipcode: "",
     isdefault: false,
   });
-  // console.log(newAddress, "ho gia id");
 
+  // Set userId from localStorage
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const id = localStorage.getItem("userId");
+      setUserId(id || "");
+    }
+  }, []);
+
+  // Update newAddress user_id when userId is available
+  useEffect(() => {
+    if (userId) {
+      setNewAddress((prev) => ({ ...prev, user_id: userId }));
+      fetchAddresses(userId);
+    }
+  }, [userId]);
+
+  // Change body background based on form visibility
   useEffect(() => {
     document.body.style.backgroundColor = isFormVisible ? "#f4f4f4" : "#ffffff";
     return () => {
@@ -65,12 +66,10 @@ export default function Page() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (isEditMode) {
+    if (isEditMode && editAddress?.id) {
       updateAddress(editAddress.id, newAddress);
-      // setAddresses((prev) => prev.map(addr => addr.id === editAddress.id ? newAddress : addr));
     } else {
       addAddress(newAddress);
-      // setAddresses((prev) => [...prev, newAddress]);
     }
     setIsFormVisible(false);
   };
@@ -97,17 +96,12 @@ export default function Page() {
     setIsFormVisible(true);
   };
 
-  useEffect(() => {
-    if (userId) {
-      fetchAddresses(userId);
-    }
-  }, [userId, addresses]);
-
   return (
     <section className="my_address">
       <div className="heading_div">
         <Header2 />
       </div>
+
       <div className="container mar_top">
         <div className="row">
           <div className="col-md-4 my_profile">
@@ -115,6 +109,7 @@ export default function Page() {
               <MyProfile />
             </div>
           </div>
+
           <div className="col-md-8 second_div mt-5">
             <p id="btn" className="mb-3" onClick={handleAddNewClick}>
               + Add New Address
@@ -123,51 +118,42 @@ export default function Page() {
             {addresses && addresses.length > 0 ? (
               addresses.map((addr) => (
                 <div className="address_parent_div pb-3 mb-3" key={addr.id}>
-                  <div className="name_div ">
+                  <div className="name_div">
                     <h3>{addr.name}</h3>
-                    {addr?.isdefault === 1 ? <h6 id="default">Default</h6> : ""}
+                    {addr?.isdefault === 1 && <h6 id="default">Default</h6>}
                   </div>
                   <div className="address_div">
                     <div className="flex_div">
                       <p>
-                        {addr.street_address},{addr.zipcode}
+                        {addr.street_address}, {addr.zipcode}
                       </p>
                       <div className="phone_div">
                         <FiPhone className="icon_size" />
                         <p>{addr.phone}</p>
                       </div>
                       <p>
-                        {addr?.city}, {addr?.country}
+                        {addr.city}, {addr.country}
                       </p>
                     </div>
                     <div className="btn_div">
-                      {/* {addr?.isdefault === 1 ? (
-                        <h6 id="default">Default</h6>
-                      ) : (
-                        ""
-                      )} */}
                       <button
                         className="edit"
                         onClick={() => handleEditClick(addr)}
                       >
-                        <TiEdit className="edit_icon" />
-                        Edit
+                        <TiEdit className="edit_icon" /> Edit
                       </button>
                       <button
                         className="delete"
                         onClick={() => deleteAddress(addr.id)}
                       >
-                        <RiDeleteBin5Line />
-                        Delete
+                        <RiDeleteBin5Line /> Delete
                       </button>
                     </div>
                   </div>
                 </div>
               ))
             ) : (
-              <p className="alert alert-warning" hidden="">
-                No Addresses Found!
-              </p>
+              <p className="alert alert-warning">No Addresses Found!</p>
             )}
           </div>
         </div>
@@ -181,6 +167,7 @@ export default function Page() {
                 onClick={() => setIsFormVisible(false)}
               />
             </div>
+
             <div className="row">
               <div className="col-lg-6 mt-3">
                 <label>Full Name</label>
@@ -214,7 +201,7 @@ export default function Page() {
                   onChange={handleChange}
                   className="form-control"
                   placeholder="Address"
-                  style={{ color: "#000 !important", height: "60px" }}
+                  style={{ height: "60px" }}
                 />
               </div>
 
@@ -226,7 +213,7 @@ export default function Page() {
                   value={newAddress.country}
                   onChange={handleChange}
                   className="form-control"
-                  placeholder="country"
+                  placeholder="Country"
                 />
               </div>
 
@@ -238,7 +225,7 @@ export default function Page() {
                   value={newAddress.city}
                   onChange={handleChange}
                   className="form-control"
-                  placeholder="city"
+                  placeholder="City"
                 />
               </div>
 
@@ -287,7 +274,9 @@ export default function Page() {
           </form>
         )}
       </div>
+
       <Footer2 />
     </section>
   );
 }
+

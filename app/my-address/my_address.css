@@ -141,6 +141,7 @@ p#btn {
   background-color: white;
   color: #000;
   transition: 0.5s ease-in-out;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
 .my_address .active {

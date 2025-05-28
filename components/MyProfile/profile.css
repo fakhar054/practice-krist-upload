@@ -3,6 +3,11 @@
   padding: 10px 20px;
   cursor: pointer;
 }
+.myProfile_parent_div h4 {
+  /* color: red; */
+  border-bottom: 1px solid #f6f6f6;
+  padding-bottom: 15px;
+}
 .myProfile_parent_div .bottom_border {
   /* border-bottom: 2px solid #131118; */
   width: 100%;
@@ -11,7 +16,6 @@
   border-radius: 6px;
   color: white;
 }
-
 
 .flex_props p {
   font-size: 17px;
@@ -47,14 +51,13 @@
   }
 }
 
-
-.profile_heading{
+.profile_heading {
   font-family: "Jost" !important;
   font-size: 34px;
   font-weight: 400;
   margin-bottom: 20px;
 }
 
-.user_info{
+.user_info {
   line-height: 34px;
 }
