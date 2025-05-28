@@ -119,48 +119,7 @@ export default function Page() {
             <p id="btn" className="mb-3" onClick={handleAddNewClick}>
               + Add New Address
             </p>
-            {/* {addresses && addresses.length > 0 ? (
-              addresses.map((addr) => (
-                <div className="address_parent_div pb-3 mb-3" key={addr.id}>
-                  <h3>{addr.name}</h3>
-                  <div className="address_div">
-                    <div className="flex_div">
-                      <p>
-                        {addr.street_address},{addr.zipcode}
-                      </p>
-                      <div className="phone_div">
-                        <FiPhone className="icon_size" />
-                        <p>{addr.phone}</p>
-                      </div>
-                      <p>
-                        {addr?.city}, {addr?.country}
-                      </p>
-                    </div>
-                    <div className="btn_div">
-                      {defaultAddress && <h6 id="default">Default</h6>}
-                      <button
-                        className="edit"
-                        onClick={() => handleEditClick(addr)}
-                      >
-                        <TiEdit className="edit_icon" />
-                        Edit
-                      </button>
-                      <button
-                        className="delete"
-                        onClick={() => deleteAddress(addr.id)}
-                      >
-                        <RiDeleteBin5Line />
-                        Delete
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              ))
-            ) : (
-              <p className="alert alert-warning" hidden="">
-                No Addresses Found!
-              </p>
-            )} */}
+
             {addresses && addresses.length > 0 ? (
               addresses.map((addr) => (
                 <div className="address_parent_div pb-3 mb-3" key={addr.id}>

@@ -102,7 +102,7 @@ export default function Header2() {
     searchedProducts,
     searchedLoading,
   } = useContext(ResponseContext);
-  console.log("The list of searchedProducts is ::", searchedProducts);
+  // console.log("The list of searchedProducts is ::", searchedProducts);
   // console.log("The searchedPorudct is  ::", searchedLoading);
 
   const [open, setOpen] = useState(false);

@@ -28,33 +28,9 @@ export default function ReviewOrder() {
     discountAmount,
     response_Context,
   } = useContext(ResponseContext);
-  // console.log(formDataCheckout.address, "data checked....")
-  // const [show, setShow] = useState(false);
+
   const router = useRouter();
 
-  // const togglePopup = () => {
-  //   setShow(!show);
-  // };
-  // useEffect(() => {
-  //   if (show) {
-  //     document.body.style.backgroundColor = "#C5C5C5";
-  //   } else {
-  //     document.body.style.backgroundColor = "";
-  //   }
-
-  //   return () => {
-  //     document.body.style.backgroundColor = "";
-  //   };
-  // }, [show]);
-
-  // const handlePopup = () => {
-  //   if (show) {
-  //     setShow(false);
-  //   }
-  // };
-
-  // const { setting, discountAmount, response_Context } =
-  //   useContext(ResponseContext);
   const user_id = response_Context?.user?.id;
 
   const [loading, setLoading] = useState(false);
@@ -70,156 +46,6 @@ export default function ReviewOrder() {
   const subtotal = parseFloat(getTotalAmount());
   const deliveryFee = Number(setting?.shipping_cost || 0);
   const grandTotal = subtotal - discountAmount + subtotal * 0.22 + deliveryFee;
-
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   setLoading(true);
-  //   try {
-  //     const {
-  //       full_name,
-  //       email,
-  //       password,
-  //       billing_street,
-  //       billing_city,
-  //       billing_country,
-  //       billing_phone,
-  //       billing_postal_code,
-  //       shipping_street,
-  //       shipping_city,
-  //       shipping_country,
-  //       shipping_phone,
-  //       shipping_postal_code,
-  //       customer_type,
-  //       tax_code,
-  //       company_name,
-  //       vat_number,
-  //       same_as,
-  //     } = formDataCheckout.address;
-
-  //     const transformedItems = formDataCheckout.items.map((item) => {
-  //       const {
-  //         id,
-  //         title,
-  //         current_price,
-  //         previous_price,
-  //         quantity,
-  //         category,
-  //         category_name,
-  //         color,
-  //         size,
-  //         rating,
-  //         thumbnail,
-  //         created_at,
-  //         updated_at,
-  //       } = item;
-
-  //       const finalColor = Array.isArray(color) ? color.join(", ") : color;
-  //       const finalSize = Array.isArray(size) ? size.join(", ") : size;
-  //       const finalCategoryName = category_name || category || "";
-
-  //       return {
-  //         id,
-  //         title,
-  //         current_price,
-  //         previous_price,
-  //         quantity,
-  //         color: finalColor,
-  //         size: finalSize,
-  //         rating,
-  //         thumbnail,
-  //         created_at,
-  //         updated_at,
-  //         category_name: finalCategoryName,
-  //       };
-  //     });
-
-  //     const totalQuantity = transformedItems.reduce(
-  //       (sum, item) => sum + item.quantity,
-  //       0
-  //     );
-  //     console.log("Total Quantity:", totalQuantity);
-
-  //     const item_o = {
-  //       full_name,
-  //       email,
-  //       password,
-  //       billing_street,
-  //       billing_city,
-  //       billing_country,
-  //       billing_phone,
-  //       billing_postal_code,
-  //       shipping_street,
-  //       shipping_city,
-  //       shipping_country,
-  //       shipping_phone,
-  //       shipping_postal_code,
-  //       customer_type,
-  //       tax_code,
-  //       company_name,
-  //       vat_number,
-  //       same_as,
-  //       items: transformedItems,
-  //       discount: discountAmount,
-  //       grand_total: grandTotal,
-  //       subtotal,
-  //       total_quantity: totalQuantity,
-  //       tax: subtotal * 0.22,
-  //       user_id,
-  //     };
-
-  //     // console.log(item_o, "chk datatatata ");
-
-  //     const response = await fetch(
-  //       "https://foundation.alphalive.pro/api/front/checkout",
-  //       {
-  //         method: "POST",
-  //         headers: { "Content-Type": "application/json" },
-  //         body: JSON.stringify({
-  //           full_name,
-  //           email,
-  //           password,
-  //           billing_street,
-  //           billing_city,
-  //           billing_country,
-  //           billing_phone,
-  //           billing_postal_code,
-  //           shipping_street,
-  //           shipping_city,
-  //           shipping_country,
-  //           shipping_phone,
-  //           shipping_postal_code,
-  //           customer_type,
-  //           tax_code,
-  //           company_name,
-  //           vat_number,
-  //           same_as,
-  //           items: transformedItems,
-  //           discount: discountAmount,
-  //           grand_total: grandTotal,
-  //           subtotal,
-  //           total_quantity: totalQuantity,
-  //           tax: subtotal * 0.22,
-  //           user_id,
-  //         }),
-  //       }
-  //     );
-
-  //     const data = await response.json();
-
-  //     if (response.ok && data?.data) {
-  //       console.log("After the data fetched");
-  //       console.log(data, "checouttt,,t,t,t,t");
-  //       router.push(data.data);
-  //     } else {
-  //       console.log("Error while the data fetched");
-  //       toast.error(data?.error?.message || "error");
-  //     }
-  //   } catch (err) {
-  //     console.log("Something went wrong during checkout.");
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -367,6 +193,8 @@ export default function ReviewOrder() {
     router.back();
   };
 
+  console.log("form data checkout after Question", formDataCheckout?.address);
+
   return (
     <div>
       <section className="page_address mb-3 ">
@@ -389,27 +217,10 @@ export default function ReviewOrder() {
                     {/* <MdOutlineRateReview className="icon_size_shiping" /> */}
                     <BsCreditCard2Back className="icon_size_shiping " />
                   </div>
-                  {/* <div className="icon">
-                    <BsCreditCard2Back className="icon_size_shiping " />
-                  </div> */}
                 </div>
                 <hr />
               </div>
-              {/* <div className="item_products pb-2 mt-3">
-                <div className="img_div_flex d-flex gap-3">
-                  <img
-                    src="/assets/images/products/review.png"
-                    height={71}
-                    width={69}
-                    alt="slected product image"
-                  />
-                  <div className="item_details">
-                    <p id="item_name">Girls Pink Moana Printed Dress</p>
-                    <p id="item_price">$80.00</p>
-                    <p id="item_size">Size: S</p>
-                  </div>
-                </div>
-              </div> */}
+
               {cart.map((item) => (
                 <div className="pop_up_parent_div d-flex p-2" key={item.id}>
                   <div className="img_div">
@@ -466,8 +277,15 @@ export default function ReviewOrder() {
                   <p id="home_add">
                     {formDataCheckout?.address?.shipping_street}
                   </p>
-                  <p>
-                    {formDataCheckout?.address?.shipping_city},{" "}
+                  <p id="home_add">
+                    Postal Code:
+                    {formDataCheckout?.address?.shipping_postal_code}
+                  </p>
+                  <p id="home_add">
+                    Phone Num:{formDataCheckout?.address?.shipping_phone}
+                  </p>
+                  <p id="home_add">
+                    {formDataCheckout?.address?.shipping_city},
                     {formDataCheckout?.address?.shipping_country}
                   </p>
                 </div>

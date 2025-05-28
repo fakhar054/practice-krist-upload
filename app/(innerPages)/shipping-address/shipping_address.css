@@ -9,6 +9,11 @@ body {
 .page_address {
   font-family: "Jost", serif;
 }
+.page_address select {
+  appearance: auto !important;
+  padding-right: 50px !important;
+  width: 100%;
+}
 .page_address h1 {
   font-size: 36px;
   font-weight: 400;
@@ -80,7 +85,6 @@ hr {
 }
 .page_address select {
   height: 59px !important;
-  /* max-width: 669px; */
   width: 100%;
   border: 1px solid black;
   outline: none !important;
@@ -185,7 +189,6 @@ input[type="checkbox"] {
   vertical-align: middle;
 }
 
-
 input[type="checkbox"]::before {
   content: "✔";
   position: absolute;
@@ -197,7 +200,6 @@ input[type="checkbox"]::before {
   display: none;
 }
 
-
 input[type="checkbox"]:checked {
   background: black;
 }
@@ -205,8 +207,6 @@ input[type="checkbox"]:checked {
 input[type="checkbox"]:checked::before {
   display: block;
 }
-
-
 
 .box_div .btn_div {
   display: flex;

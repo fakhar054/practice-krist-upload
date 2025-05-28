@@ -145,6 +145,7 @@ input::placeholder {
 .address_section p#home_add {
   font-size: 14px;
   font-weight: 400;
+  margin-top: 04px;
 }
 
 .review_pop_up {
