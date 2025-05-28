@@ -9,15 +9,20 @@ import { ResponseContext } from "@/app/login/ResponseContext";
 
 export default function Cart1() {
   const router = useRouter();
-  const { cart, removeFromCart, updateCart, setting, currency } = useContext(ResponseContext);
+  const { cart, removeFromCart, updateCart, setting, currency } =
+    useContext(ResponseContext);
   // console.log(cart, "cart data done???")
   const [loading, setLoading] = useState(false);
+  const dummyImage = "/assets/images/dummy-image.png";
 
-  console.log(cart, "chekout response and pass api...")
-
+  console.log(cart, "chekout response and pass api...");
 
   const getTotalAmount = () => {
-    return cart?.reduce((total, item) => total + item.current_price * item.quantity, 0).toFixed(2) || "0.00";
+    return (
+      cart
+        ?.reduce((total, item) => total + item.current_price * item.quantity, 0)
+        .toFixed(2) || "0.00"
+    );
   };
 
   const updateCartQuantity = (id, newQuantity) => {
@@ -27,44 +32,9 @@ export default function Cart1() {
 
   const totalPrice = 0;
 
-  // const handleCheckout = async () => {``
-  //   if (cart.length === 0) {
-  //     alert("Your cart is empty!");
-  //     return;
-  //   }
-
-  //   setLoading(true);
-  //   try {
-  //     const response = await fetch(
-  //       "https://foundation.alphalive.pro/api/front/checkout",
-  //       {
-  //         method: "POST",
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //         },
-  //         body: JSON.stringify({ items: cart }),
-  //       }
-  //     );
-
-  //     const result = await response.json();
-  //     if (response.ok) {
-  //       console.log("Checkout successful:", result);
-  //       // router.push("/shipping-address"); 
-  //     } else {
-  //       console.error("Checkout failed:", result);
-  //       alert(result.message || "Checkout failed!");
-  //     }
-  //   } catch (error) {
-  //     console.error("Error during checkout:", error);
-  //     alert("An error occurred. Please try again.");
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
-
   const handleNavigate = () => {
     router.push("/shipping-address");
-  }
+  };
 
   // const [inputCode, setInputCode] = useState("");
   // console.log(inputCode, "code input.,.,.,")
@@ -91,7 +61,10 @@ export default function Cart1() {
           </header>
           <div className="panel cart-details row mb-5">
             <div className="col-lg-8">
-              <div className="card px-3" style={{ boxShadow: "1px 0px 5px lightgray" }}>
+              <div
+                className="card px-3"
+                style={{ boxShadow: "1px 0px 5px lightgray" }}
+              >
                 <form
                   onSubmit={(e) => e.preventDefault()}
                   className="panel max-h-sm overflow-auto "
@@ -127,7 +100,9 @@ export default function Cart1() {
                                 <Image
                                   className=""
                                   alt="Laptop Cover"
-                                  src={elm?.thumbnail}
+                                  src={
+                                    elm?.thumbnail ? elm?.thumbnail : dummyImage
+                                  }
                                   width="96"
                                   height="98"
                                 />
@@ -149,13 +124,19 @@ export default function Cart1() {
                                   </h5>
                                   {elm?.size && elm?.size.length > 0 && (
                                     <p className="sizes">
-                                      Size: {Array.isArray(elm.size) ? elm.size[0] : elm.size}
+                                      Size:{" "}
+                                      {Array.isArray(elm.size)
+                                        ? elm.size[0]
+                                        : elm.size}
                                     </p>
                                   )}
 
                                   {elm?.color && elm?.color.length > 0 && (
                                     <p className="sizes">
-                                      Color: {Array.isArray(elm.color) ? elm.color[0] : elm.color}
+                                      Color:{" "}
+                                      {Array.isArray(elm.color)
+                                        ? elm.color[0]
+                                        : elm.color}
                                     </p>
                                   )}
                                 </div>
@@ -163,7 +144,8 @@ export default function Cart1() {
                             </td>
                             <td>
                               <span className="price">
-                                {currency?.sign}{elm?.current_price}
+                                {currency?.sign}
+                                {elm?.current_price}
                               </span>
                             </td>
                             <td>
@@ -175,62 +157,90 @@ export default function Cart1() {
                                 max={99}
                                 name="quantity"
                                 value={elm?.quantity}
-                                onChange={(e) => updateCartQuantity(elm?.id, parseInt(e.target.value, 10))}
+                                onChange={(e) =>
+                                  updateCartQuantity(
+                                    elm?.id,
+                                    parseInt(e.target.value, 10)
+                                  )
+                                }
                                 title="Qty"
                                 autoComplete="off"
                               />
                             </td>
                             <td>
                               <span className="subtotal">
-                                {currency?.sign}{(elm?.quantity * elm?.current_price)}
+                                {currency?.sign}
+                                {elm?.quantity * elm?.current_price}
                               </span>
                             </td>
                             <td>
-                              <RiDeleteBin4Fill onClick={() => removeFromCart(elm?.id, elm?.color, elm?.size)} className="delete_icon_table" />
+                              <RiDeleteBin4Fill
+                                onClick={() =>
+                                  removeFromCart(elm?.id, elm?.color, elm?.size)
+                                }
+                                className="delete_icon_table"
+                              />
                             </td>
                           </tr>
                         ))}
                       </tbody>
-                    </table>) : (
+                    </table>
+                  ) : (
                     <p className="alert alert-warning m-3" hidden="">
                       Your cart empty!
                     </p>
-                  )
-                  }
+                  )}
                 </form>
               </div>
             </div>
 
             <div className="col-lg-4">
-              <div className="card px-3" style={{ boxShadow: "1px 0px 5px lightgray" }}>
+              <div
+                className="card px-3"
+                style={{ boxShadow: "1px 0px 5px lightgray" }}
+              >
                 <table className="table table-borderless pb-3">
                   <tbody className="mb-3">
                     <tr className="sub_total border_bottom">
                       <th className="ft-tertiary text-black font_family">
                         <span className="font_family">Subtotal</span>
                       </th>
-                      <td className="text_align_right">{currency?.sign}{subtotal}</td>
+                      <td className="text_align_right">
+                        {currency?.sign}
+                        {subtotal}
+                      </td>
                     </tr>
 
                     <tr className="sub_total border_bottom">
                       <th className="ft-tertiary text-black font_family">
                         <span className="font_family">VAT 22%</span>
                       </th>
-                      <td className="text_align_right">{currency?.sign}{(subtotal * 0.22).toFixed(2)}</td>
+                      <td className="text_align_right">
+                        {currency?.sign}
+                        {(subtotal * 0.22).toFixed(2)}
+                      </td>
                     </tr>
                     <tr className="sub_total border_bottom">
                       <th className="ft-tertiary text-black font_family">
                         <span className="font_family">Delivery Charges</span>
                       </th>
                       <td className="text_align_right">
-                        {currency?.sign}{deliveryFee}</td>
+                        {currency?.sign}
+                        {deliveryFee}
+                      </td>
                     </tr>
                     <tr className="sub_total border_bottom">
                       <th className="ft-tertiary text-black font_family">
                         <span className="font_family">Grand Total</span>
                       </th>
                       <td className="text_align_right">
-                      {currency?.sign}{(Number(deliveryFee) + (subtotal * 0.22) + Number(grandtotalPrice)).toFixed(2)}</td>
+                        {currency?.sign}
+                        {(
+                          Number(deliveryFee) +
+                          subtotal * 0.22 +
+                          Number(grandtotalPrice)
+                        ).toFixed(2)}
+                      </td>
                     </tr>
 
                     <tr className="tr_row ft-tertiary">

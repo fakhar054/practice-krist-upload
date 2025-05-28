@@ -5,9 +5,8 @@ import "../../public/assets/css/theme/main.css";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 // import useAuth from "./useAuth";
-import { toast, Toaster } from "react-hot-toast"
+import { toast, Toaster } from "react-hot-toast";
 import useAuth from "./useAuth";
-
 
 export default function LoginPage() {
   const router = useRouter();
@@ -21,8 +20,7 @@ export default function LoginPage() {
     if (localStorage.getItem("token")) {
       router.push("/");
     }
-  }, [])
-
+  }, []);
 
   // Handle input changes dynamically
   const handleChange = (e) => {
@@ -69,47 +67,9 @@ export default function LoginPage() {
     // }
   };
 
-  // const handleChange = (e) => {
-  //   const { id, value } = e.target;
-  //   if (id === "email") setEmail(value);
-  //   if (id === "password") setPassword(value);
-  // };
-
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   try {
-  //     const res = await fetch(
-  //       "https://foundation.alphalive.pro/api/user/login",
-  //       {
-  //         method: "POST",
-  //         headers: { "Content-Type": "application/json" },
-  //         body: JSON.stringify({ email, password }),
-  //       }
-  //     );
-
-  //     console.log(email, password);
-  //     const data = await res.json();
-  //     console.log("API Response from login: ", data);
-
-  //     if (res.ok && data.data.token) {
-  //       localStorage.setItem("token", data.data.token);
-  //       alert("Login successful");
-  //       router.push("/");
-  //     } else {
-  //       alert(data.message || "Invalid credentials");
-  //     }
-  //   } catch (error) {
-  //     console.error("Login error:", error);
-  //     alert("Something went wrong. Please try again.");
-  //   }
-  // };
-
   return (
     <>
-      <Toaster
-        position="top-center"
-        reverseOrder={false}
-      />
+      <Toaster position="top-center" reverseOrder={false} />
       <section className="login" id="login">
         <div className="container set_bg ">
           <div className="row login-container height_width">
