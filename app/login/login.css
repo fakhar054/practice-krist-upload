@@ -6,6 +6,9 @@
 #login .d_flex {
   display: flex;
 }
+.login input {
+  font-size: 16px !important;
+}
 
 #login .height_width {
   width: 100%;
