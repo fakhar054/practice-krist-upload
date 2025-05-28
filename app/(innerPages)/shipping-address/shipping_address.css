@@ -160,7 +160,7 @@ input::placeholder {
   color: white;
 }
 
-input[type="checkbox"] {
+/* input[type="checkbox"] {
   appearance: none;
   width: 20px;
   height: 20px !important;
@@ -169,15 +169,34 @@ input[type="checkbox"] {
   cursor: pointer;
   position: relative;
   border: 1px solid black;
+} */
+
+input[type="checkbox"] {
+  appearance: none; /* Hides default browser checkbox */
+  -webkit-appearance: none; /* For Safari */
+  width: 20px;
+  height: 20px;
+  background: white;
+  border-radius: 3px;
+  cursor: pointer;
+  position: relative;
+  border: 1px solid black;
+  display: inline-block;
+  vertical-align: middle;
 }
+
 
 input[type="checkbox"]::before {
   content: "✔";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   color: white;
   font-size: 15px;
-  text-align: center;
   display: none;
 }
+
 
 input[type="checkbox"]:checked {
   background: black;
@@ -186,6 +205,8 @@ input[type="checkbox"]:checked {
 input[type="checkbox"]:checked::before {
   display: block;
 }
+
+
 
 .box_div .btn_div {
   display: flex;
