@@ -62,7 +62,8 @@ hr {
   /* height: 59px; */
   border-radius: 6px;
   /* border: 1px solid black; */
-  max-width: 669px;
+  /* max-width: 669px; */
+  width: 100%;
 }
 .page_address input:focus {
   box-shadow: none !important;
@@ -79,7 +80,8 @@ hr {
 }
 .page_address select {
   height: 59px !important;
-  max-width: 669px;
+  /* max-width: 669px; */
+  width: 100%;
   border: 1px solid black;
   outline: none !important;
   border-radius: 6px;
