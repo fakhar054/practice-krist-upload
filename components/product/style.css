@@ -31,7 +31,7 @@
   width: 100%;
   display: flex;
   gap: 1.7rem;
-  /* justify-content: space-between; */
+  justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
   position: relative;
@@ -165,8 +165,6 @@
   cursor: pointer;
 }
 
-
-
 /* skelton */
 .skeleton {
   background: #ddd;
@@ -214,7 +212,6 @@
     background: #f3f3f3;
   }
 }
-
 
 .skeleton-box {
   background-color: #e0e0e0;

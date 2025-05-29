@@ -65,7 +65,9 @@ export default function Header2() {
   const handleAuth = () => {
     if (isLoggedIn) {
       localStorage.removeItem("token");
+
       sessionStorage.clear();
+      localStorage.clear();
       setIsLoggedIn(false);
       toast.success("User Logout Successfully!");
     }

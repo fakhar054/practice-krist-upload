@@ -35,6 +35,8 @@ export default function Page() {
     zipcode: "",
     isdefault: false,
   });
+  //when default address change immidetlay component rerender
+  useEffect(() => {}, [addresses]);
 
   // Set userId from localStorage
   useEffect(() => {
@@ -64,13 +66,28 @@ export default function Page() {
     setNewAddress({ ...newAddress, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   if (isEditMode && editAddress?.id) {
+  //     await updateAddress(editAddress.id, newAddress);
+  //   } else {
+  //     await addAddress(newAddress);
+  //   }
+  //   setIsFormVisible(false);
+  // };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (isEditMode && editAddress?.id) {
-      updateAddress(editAddress.id, newAddress);
+      await updateAddress(editAddress.id, newAddress);
     } else {
-      addAddress(newAddress);
+      await addAddress(newAddress);
     }
+
+    if (userId) {
+      await fetchAddresses(userId); // force refresh after update
+    }
+
     setIsFormVisible(false);
   };
 

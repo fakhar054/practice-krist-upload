@@ -323,7 +323,7 @@ export default function Page() {
   });
 
   useEffect(() => {
-    if (!loadingUserData) {
+    if (!loadingUserData && full_name) {
       const [firstName, ...rest] = full_name.split(" ");
       const lastName = rest.join(" ");
       setFormData({
