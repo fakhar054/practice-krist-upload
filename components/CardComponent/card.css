@@ -254,7 +254,7 @@ p.reviewed {
   max-height: 0; /* Initially hidden */
   background-color: white;
   padding: 10px 14px;
-  overflow-y: auto;
+  /* overflow-y: auto; */
   position: absolute;
   top: -20px;
   right: 0px;
@@ -262,7 +262,8 @@ p.reviewed {
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   opacity: 0;
   transform: translateY(-20px);
-  transition: max-height 0.5s ease-in-out, opacity 0.4s ease, transform 0.4s ease;
+  transition: max-height 0.5s ease-in-out, opacity 0.4s ease,
+    transform 0.4s ease;
 }
 
 .pop_up.show {
@@ -279,6 +280,14 @@ p.reviewed {
   opacity: 1;
   transform: scale(1);
 } */
+
+.pop_up_item_wrapper {
+  overflow-y: auto;
+  width: 100%;
+  padding-right: 20px;
+  max-height: 300px;
+  scroll-behavior: smooth;
+}
 .single_product .pop_up p {
   margin-top: 0 !important;
 }

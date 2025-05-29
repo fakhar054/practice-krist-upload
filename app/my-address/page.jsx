@@ -193,9 +193,10 @@ export default function Page() {
                 />
               </div>
 
-              <div className="col-lg-12 mt-3">
+              <div className="col-lg-6 mt-3">
                 <label>Address</label>
-                <textarea
+                <input
+                  type="text"
                   name="street_address"
                   value={newAddress.street_address}
                   onChange={handleChange}
@@ -279,4 +280,3 @@ export default function Page() {
     </section>
   );
 }
-
