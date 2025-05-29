@@ -13,7 +13,10 @@ export default function Page() {
 
   return (
     <section id="all_product" className="all_product">
-      <Header2 />
+      {/* <Header2 /> */}
+      <div className="heading_div">
+        <Header2 />
+      </div>
       <div className="container margin_top" style={{ paddingTop: "166px" }}>
         <div className="row">
           <div className="col-md-12 col-lg-3">

@@ -43,6 +43,7 @@ export default function Header2() {
     setAnimateWishlist,
     setting,
   } = useContext(ResponseContext);
+  
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -65,7 +66,6 @@ export default function Header2() {
   const handleAuth = () => {
     if (isLoggedIn) {
       localStorage.removeItem("token");
-
       sessionStorage.clear();
       localStorage.clear();
       setIsLoggedIn(false);
