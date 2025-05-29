@@ -88,10 +88,10 @@ export default function ShippingAddress() {
       const user = response_Context?.user || {};
       // const first = addresses?.[0] || {};
       const first = addresses?.find((addres) => addres.isdefault === 1) || {};
-
       setFormData((prev) => ({
         ...prev,
-        full_name: first.name || prev.full_name,
+        // full_name: first.name || prev.full_name,
+        full_name: user?.full_name,
         email: user.email || prev.email,
         billing_street: first.street_address || prev.billing_street,
         billing_city: first.city || prev.billing_city,

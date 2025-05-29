@@ -299,7 +299,7 @@ export default function Page() {
   const user = response_Context?.user || {};
   const { email = "", full_name = "", address = "", propic = "" } = user;
 
-  console.log("full name is ::::", full_name);
+  // console.log("full name is ::::", full_name);
   useEffect(() => {
     if (typeof window !== "undefined") {
       const id = localStorage.getItem("userId");
@@ -321,6 +321,37 @@ export default function Page() {
     photo: "",
     user_id: null,
   });
+
+  console.log("Full response context", response_Context);
+
+  useEffect(() => {
+    const email = response_Context?.user?.email;
+    const address = response_Context?.user?.address;
+    const fullName = response_Context?.user?.full_name;
+
+    setFormData((prev) => {
+      let first_name = prev.first_name;
+      let last_name = prev.last_name;
+
+      if (fullName) {
+        const [first, ...rest] = fullName.split(" ");
+        first_name = first;
+        last_name = rest.join(" ");
+      }
+
+      return {
+        ...prev,
+        email: email || prev.email,
+        address: address || prev.address,
+        first_name,
+        last_name,
+      };
+    });
+  }, [
+    response_Context?.user?.email,
+    response_Context?.user?.address,
+    response_Context?.user?.full_name,
+  ]);
 
   useEffect(() => {
     if (!loadingUserData && full_name) {
