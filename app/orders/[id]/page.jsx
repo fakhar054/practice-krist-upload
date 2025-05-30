@@ -148,16 +148,16 @@ export default function InvoicePage() {
                     {formatDate(orderDetails?.created_at)}
                   </h6>
                 </div>
-                <div style={{ width: "25%" }}>
+                {/* <div style={{ width: "25%" }}>
                   <p>Due Date</p>
                   <h6
                     className="p-1 w-100"
                     style={{ backgroundColor: "#f2f2f2" }}
                   ></h6>
-                </div>
+                </div> */}
               </div>
               <div className="d-flex gap-1">
-                <div style={{ width: "40%" }}>
+                {/* <div style={{ width: "40%" }}>
                   <p>Payment Method</p>
                   <h6
                     className="p-1 w-100"
@@ -165,8 +165,8 @@ export default function InvoicePage() {
                   >
                     {orderDetails?.payment_method}
                   </h6>
-                </div>
-                <div style={{ width: "100%" }}>
+                </div> */}
+                {/* <div style={{ width: "100%" }}>
                   <p>IBAN</p>
                   <h6
                     className="p-1 w-100"
@@ -174,7 +174,7 @@ export default function InvoicePage() {
                   >
                     IT55 0030 6975 1441 0000 0002 544
                   </h6>
-                </div>
+                </div> */}
               </div>
             </div>
           </section>
@@ -316,15 +316,15 @@ export default function InvoicePage() {
             <div style={{ width: "100%" }}>
               <p>Order Ref</p>
               <h6 className="p-1 w-100" style={{ backgroundColor: "#f2f2f2" }}>
-                IT-254222-2024
+                {orderDetails?.number}
               </h6>
             </div>
-            <div style={{ width: "100%" }}>
+            {/* <div style={{ width: "100%" }}>
               <p>Reason for Transport</p>
               <h6 className="p-1 w-100" style={{ backgroundColor: "#f2f2f2" }}>
                 Sale
               </h6>
-            </div>
+            </div> */}
           </section>
         </div>
       )}

@@ -7,7 +7,7 @@ import "./orderDetail.css";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import Skeleton from "react-loading-skeleton";
-import "react-loading-skeleton/dist/skeleton.css"; 
+import "react-loading-skeleton/dist/skeleton.css";
 
 export default function Page() {
   const { id } = useParams();
@@ -15,6 +15,8 @@ export default function Page() {
   const [orderDetails, setOrderDetails] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  console.log("Order details::", orderDetails);
 
   useEffect(() => {
     const fetchOrderDetails = async () => {
@@ -97,7 +99,10 @@ export default function Page() {
               <h3>
                 Order# {orderDetails?.number} [{orderDetails?.status}]
               </h3>
-              <div className="d-flex justify-content-between align-items-start w-100" style={{justifyContent:"space-between"}}>
+              <div
+                className="d-flex justify-content-between align-items-start w-100"
+                style={{ justifyContent: "space-between" }}
+              >
                 <p>Order Date: {formatDate(orderDetails?.created_at)}</p>
                 <Link href={`/orders/${orderDetails?.id}`}>
                   <button className="btn btn-dark">Print Order</button>
@@ -110,19 +115,20 @@ export default function Page() {
                   Email: {orderDetails?.shipping_email} <br />
                   Phone: {orderDetails?.shipping_phone} <br />
                   Address: {orderDetails?.shipping_address} <br />
-                  {orderDetails?.shipping_city}, {orderDetails?.shipping_zip},{" "}
+                  {orderDetails?.shipping_city}, {orderDetails?.shipping_zip}{" "}
                   {orderDetails?.shipping_country}
                 </p>
               </div>
-              <div className="d-flex justify-content-between">
-                <div>
+              <div className="d-flex justify-content-between mt-3">
+                <div className="me-3">
                   <h6>Billing Address</h6>
                   <p>
-                    Name: {orderDetails?.billing_name} <br />
-                    Email: {orderDetails?.billing_email} <br />
-                    Phone: {orderDetails?.billing_phone} <br />
-                    Address: {orderDetails?.billing_address} <br />
-                    {orderDetails?.billing_city}, {orderDetails?.billing_zip}
+                    Name: {orderDetails?.shipping_name} <br />
+                    Email: {orderDetails?.shipping_email} <br />
+                    Phone: {orderDetails?.shipping_phone} <br />
+                    Address: {orderDetails?.shipping_address} <br />
+                    {orderDetails?.shipping_city}{" "}
+                    {orderDetails?.shipping_country}
                   </p>
                 </div>
                 <div>
@@ -130,11 +136,11 @@ export default function Page() {
                   <p>Payment Status: {orderDetails?.payment_status}</p>
                   <p>Tax: {orderDetails?.tax}</p>
                   <p>Paid Amount: {orderDetails?.total}</p>
-                  <p>Payment Method: {orderDetails?.payment_method}</p>
-                  <p>Transaction ID: {orderDetails?.transaction_id}</p>
+                  {/* <p>Payment Method: {orderDetails?.payment_method}</p>
+                  <p>Transaction ID: {orderDetails?.transaction_id}</p> */}
                 </div>
               </div>
-              <div className="overflow-x-auto">
+              <div className="overflow-x-auto mt-2">
                 <h6>Ordered Products</h6>
                 <table className="w-full border border-gray-300 text-sm sm:text-base">
                   <thead className="bg-gray-100">
@@ -171,8 +177,7 @@ export default function Page() {
                               <td className="p-2">{productInfo?.price}</td>
                               <td className="p-2">
                                 {(
-                                  parseFloat(productInfo?.price || 0) *
-                                  quantity
+                                  parseFloat(productInfo?.price || 0) * quantity
                                 ).toFixed(2)}
                               </td>
                             </tr>
