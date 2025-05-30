@@ -47,7 +47,7 @@ export default function Page() {
       <div className="heading_div">
         <Header2 />
       </div>
-      <div className="container product_image">
+      <div className="container product_image margin_top">
         <div className="row mt-5 position_relative">
           <div className="col-lg-4 my_profile mb-2">
             <div className="position_fixed">
@@ -136,7 +136,7 @@ export default function Page() {
                         setCurrentPage((prev) => Math.max(prev - 1, 1))
                       }
                       disabled={currentPage === 1}
-                      className="px-3 bg-gray-200 rounded disabled:opacity-50 text-white me-1"
+                      className="px-3 bg-black rounded disabled:opacity-50 text-white me-1"
                     >
                       Prev
                     </button>
@@ -145,7 +145,7 @@ export default function Page() {
                         setCurrentPage((prev) => Math.min(prev + 1, totalPages))
                       }
                       disabled={currentPage === totalPages}
-                      className="px-3 bg-gray-200 rounded disabled:opacity-50 text-white"
+                      className="px-3 bg-black rounded disabled:opacity-50 text-white"
                     >
                       Next
                     </button>
