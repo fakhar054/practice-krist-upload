@@ -13,6 +13,9 @@ export default function Contact() {
     message: "",
   });
 
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+  console.log("Base Url is: ", baseUrl);
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -32,17 +35,15 @@ export default function Contact() {
     }
 
     try {
+      const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
       setLoading(true);
-      const response = await fetch(
-        "https://foundation.alphalive.pro/api/front/contactmail",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
-        }
-      );
+      const response = await fetch(`${baseUrl}api/front/contactmail`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
 
       const data = await response.json();
       // console.log(data, "contact uss....")

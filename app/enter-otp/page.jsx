@@ -24,16 +24,17 @@ export default function OtpPage() {
   const [otpValues, setOtpValues] = useState(["", "", "", "", "", ""]);
   const inputRefs = useRef([]);
 
-  const user_Email = response_Context?.data?.user?.email || "No email available";
+  const user_Email =
+    response_Context?.data?.user?.email || "No email available";
   // const userId = response_Context?.data?.user?.id || "No ID available";
   // const userId = localStorage.getItem("userId") || "No ID available";
-  const [userId, setUserId] = useState(null); 
-      useEffect(() => {
-        if (typeof window !== "undefined") {
-          const id = localStorage.getItem("userId"); 
-          setUserId(id || "No ID available");
-        }
-      }, []);
+  const [userId, setUserId] = useState(null);
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const id = localStorage.getItem("userId");
+      setUserId(id || "No ID available");
+    }
+  }, []);
 
   useEffect(() => {
     inputRefs.current[0]?.focus(); // Auto-focus on first input
@@ -75,17 +76,15 @@ export default function OtpPage() {
     console.log(requestData, "otp enter after this is pass..ll;;;;;;;;;");
 
     try {
-      const response = await fetch(
-        "https://foundation.alphalive.pro/api/user/verify-otp",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(requestData),
-        }
-      );
+      const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+      const response = await fetch(`${baseUrl}api/user/verify-otp`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(requestData),
+      });
 
       const result = await response.json();
-      console.log(result, "otp data respone......")
+      console.log(result, "otp data respone......");
       if (result.status === true) {
         toast.success("OTP Verified!");
         showConfirmForm(true);
@@ -123,14 +122,12 @@ export default function OtpPage() {
 
     setLoading(true);
     try {
-      const response = await fetch(
-        "https://foundation.alphalive.pro/api/user/forgot/submit",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(requestData),
-        }
-      );
+      const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+      const response = await fetch(`${baseUrl}api/user/forgot/submit`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(requestData),
+      });
 
       const result = await response.json();
       if (result.status === true) {
@@ -170,22 +167,29 @@ export default function OtpPage() {
                 <div className="input_parent_div">
                   {otpValues.map((val, index) => (
                     <input
-                    key={index}
-                    ref={(el) => (inputRefs.current[index] = el)}
-                    type="text"
-                    className="square-input"
-                    maxLength="1"
-                    value={val}
-                    onChange={(e) => handleOtpChange(index, e.target.value)}
-                    onKeyDown={(e) => handleKeyDown(index, e)}
-                  />
+                      key={index}
+                      ref={(el) => (inputRefs.current[index] = el)}
+                      type="text"
+                      className="square-input"
+                      maxLength="1"
+                      value={val}
+                      onChange={(e) => handleOtpChange(index, e.target.value)}
+                      onKeyDown={(e) => handleKeyDown(index, e)}
+                    />
                   ))}
                 </div>
 
-                <button type="submit" className="btn btn-dark w-100 mt-3" disabled={loading}>
+                <button
+                  type="submit"
+                  className="btn btn-dark w-100 mt-3"
+                  disabled={loading}
+                >
                   {loading ? (
                     <>
-                      <span className="spinner-border spinner-border-sm me-2" role="status"></span>
+                      <span
+                        className="spinner-border spinner-border-sm me-2"
+                        role="status"
+                      ></span>
                       Verifying...
                     </>
                   ) : (
@@ -199,8 +203,14 @@ export default function OtpPage() {
           {confirmForm && (
             <div className="row mt-5 mb-5">
               <div className="confirm_form">
-                <form className="mt-3 form-confirm" onSubmit={handleResetSubmit}>
-                  <AiOutlineClose className="form_close_icon" onClick={() => showConfirmForm(false)} />
+                <form
+                  className="mt-3 form-confirm"
+                  onSubmit={handleResetSubmit}
+                >
+                  <AiOutlineClose
+                    className="form_close_icon"
+                    onClick={() => showConfirmForm(false)}
+                  />
 
                   <div className="mb-3">
                     <label htmlFor="newPassword" className="form-label">
@@ -232,10 +242,17 @@ export default function OtpPage() {
                     />
                   </div>
 
-                  <button type="submit" className="btn btn-dark" disabled={loading}>
+                  <button
+                    type="submit"
+                    className="btn btn-dark"
+                    disabled={loading}
+                  >
                     {loading ? (
                       <>
-                        <span className="spinner-border spinner-border-sm me-2" role="status"></span>
+                        <span
+                          className="spinner-border spinner-border-sm me-2"
+                          role="status"
+                        ></span>
                         Updating...
                       </>
                     ) : (

@@ -6,7 +6,7 @@ import Link from "next/link";
 import Image from "next/image";
 import LanguageSelect from "../common/LanguageSelect";
 import { footerLinks, socialLinks } from "@/data/footer";
-import imgCard from "../../public/assets/images/credit-card.png"
+import imgCard from "../../public/assets/images/credit-card.png";
 
 import { MdOutlinePhoneInTalk } from "react-icons/md";
 import { MdOutlineAttachEmail } from "react-icons/md";
@@ -30,43 +30,43 @@ export default function Footer2() {
     }
   }, []);
 
-
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
   };
 
-  const handleSubscription = async () => {
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
+  const handleSubscription = async () => {
     setLoading(true);
 
     try {
       // Replace with your API endpoint or third-party service
-      const response = await fetch('https://foundation.alphalive.pro/api/front/subscriber/store', {
-        method: 'POST',
+      const response = await fetch(`${baseUrl}api/front/subscriber/store`, {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify({email}),
+        body: JSON.stringify({ email }),
       });
 
       const data = await response.json();
 
       if (data.message) {
-        toast.success(data?.message)
+        toast.success(data?.message);
       } else {
         if (data?.errors && Array.isArray(data.errors)) {
           data.errors.forEach((error) => {
             toast.error(error || "This Email Has Already Been Taken."); // Show each error message individually
           });
         } else {
-          toast.error('Something went wrong, please try again.');
-        }     
+          toast.error("Something went wrong, please try again.");
+        }
       }
     } catch (error) {
-      toast.error("Error occurred, please try again.")
+      toast.error("Error occurred, please try again.");
     } finally {
       setLoading(false);
     }
@@ -115,7 +115,11 @@ export default function Footer2() {
               <h4 className="small_heading pt-2">Information</h4>
               <ul>
                 <li>
-                  {isLoggedIn ? <Link href="/personal-info">My Account</Link> : <Link href="/login">Login</Link>}
+                  {isLoggedIn ? (
+                    <Link href="/personal-info">My Account</Link>
+                  ) : (
+                    <Link href="/login">Login</Link>
+                  )}
                 </li>
                 <li>
                   <Link href="/my-wishlist">My Wishlist</Link>
@@ -161,7 +165,10 @@ export default function Footer2() {
                   onChange={handleEmailChange}
                 />
                 {loading ? (
-                  <span className="spinner-border spinner-border-sm me-2" role="status"></span> 
+                  <span
+                    className="spinner-border spinner-border-sm me-2"
+                    role="status"
+                  ></span>
                 ) : (
                   <FaArrowRight
                     className="input_icon_size email_arrow"
@@ -176,10 +183,26 @@ export default function Footer2() {
           <div className="bottom_foter pt-3 pb-3 d-flex">
             {/* <img src="/assets/images/common/visa_card.png" />  */}
             <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-              <img src="/assets/images/credit-card.png" style={{ width: "55px", height: "55px" }} alt="card" />
-              <img src="/assets/images/amex.png" style={{ width: "55px", height: "45px" }} alt="card" />
-              <img src="/assets/images/google-pay.png" style={{ width: "55px", height: "55px" }} alt="card" />
-              <img src="/assets/images/paypal.png" style={{ width: "60px", height: "60px" }} alt="card" />
+              <img
+                src="/assets/images/credit-card.png"
+                style={{ width: "55px", height: "55px" }}
+                alt="card"
+              />
+              <img
+                src="/assets/images/amex.png"
+                style={{ width: "55px", height: "45px" }}
+                alt="card"
+              />
+              <img
+                src="/assets/images/google-pay.png"
+                style={{ width: "55px", height: "55px" }}
+                alt="card"
+              />
+              <img
+                src="/assets/images/paypal.png"
+                style={{ width: "60px", height: "60px" }}
+                alt="card"
+              />
             </div>
             <p>{setting?.copyright}</p>
             <div className="icon_div">

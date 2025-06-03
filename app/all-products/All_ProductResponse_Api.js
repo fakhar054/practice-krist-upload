@@ -2,13 +2,13 @@
 import { useState, useEffect } from "react";
 
 const useAllProducts = (page) => {
-  const url = `https://foundation.alphalive.pro/api/front/products?page=${page}`;
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+  const url = `${baseUrl}/api/front/products?page=${page}`;
 
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [totalPages, setTotalPages] = useState(1); // Store total pages from API
-
+  const [totalPages, setTotalPages] = useState(1);
   useEffect(() => {
     const fetchData = async () => {
       try {

@@ -9,21 +9,20 @@ const useAuth = () => {
   const router = useRouter();
   const { setResponse_Context } = useContext(ResponseContext);
 
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+
   // ✅ Register a New User
   const registration = async (first_name, last_name, email, password) => {
     setLoading(true);
     setError(null);
     try {
-      const res = await fetch(
-        "https://foundation.alphalive.pro/api/user/registration",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ first_name, last_name, email, password }),
-        }
-      );
+      const res = await fetch(`${baseUrl}api/user/registration`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ first_name, last_name, email, password }),
+      });
 
       const data = await res.json();
 
@@ -52,16 +51,13 @@ const useAuth = () => {
     setLoading(true);
     setError(null);
     try {
-      const res = await fetch(
-        "https://foundation.alphalive.pro/api/user/login",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ email, password }),
-        }
-      );
+      const res = await fetch(`${baseUrl}api/user/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
 
       const data = await res.json();
 
@@ -100,17 +96,14 @@ const useAuth = () => {
     setError(null);
 
     try {
-      const res = await fetch(
-        "https://foundation.alphalive.pro/api/user/profile/update",
-        {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-            // ❌ DO NOT add "Content-Type" manually for FormData
-          },
-          body: formDataToSend,
-        }
-      );
+      const res = await fetch(`${baseUrl}api/user/profile/update`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          // ❌ DO NOT add "Content-Type" manually for FormData
+        },
+        body: formDataToSend,
+      });
 
       const data = await res.json();
       // setProfileData(data.data);
@@ -138,9 +131,7 @@ const useAuth = () => {
   const fetchDataOrder = async (userId) => {
     setLoading(true);
     try {
-      const res = await fetch(
-        `https://foundation.alphalive.pro/api/user/dashboard/${userId}`
-      );
+      const res = await fetch(`${baseUrl}api/user/dashboard/${userId}`);
       console.log(res, "response order ka");
       const data = await res.json();
       return data;

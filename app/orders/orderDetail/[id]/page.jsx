@@ -18,13 +18,12 @@ export default function Page() {
 
   console.log("Order details::", orderDetails);
 
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
   useEffect(() => {
     const fetchOrderDetails = async () => {
       try {
         setLoading(true);
-        const response = await fetch(
-          `https://foundation.alphalive.pro/api/user/order/${id}/details`
-        );
+        const response = await fetch(`${baseUrl}api/user/order/${id}/details`);
         const data = await response.json();
         if (response.ok) {
           setOrderDetails(data.data);

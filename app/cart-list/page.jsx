@@ -37,7 +37,6 @@ export default function Page() {
   //   setLoading(true);
   //   try {
   //     const response = await fetch(
-  //       "https://foundation.alphalive.pro/api/front/checkout",
   //       {
   //         method: "POST",
   //         headers: {

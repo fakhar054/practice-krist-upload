@@ -151,14 +151,12 @@ export default function ReviewOrder() {
         user_id,
       };
 
-      const response = await fetch(
-        "https://foundation.alphalive.pro/api/front/checkout",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(item_o),
-        }
-      );
+      const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+      const response = await fetch(`${baseUrl}api/front/checkout`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(item_o),
+      });
 
       const data = await response.json();
 

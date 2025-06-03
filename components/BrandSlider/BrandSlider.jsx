@@ -11,27 +11,28 @@ export default function BrandSlider() {
   const [partner, serPartner] = useState([]);
   const [error, setError] = useState();
   const [loading, setLoading] = useState(false);
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
-    useEffect(() => {
-      const getProducts = async () => {
-        setLoading(true);
-        try {
-          const response = await fetch("https://foundation.alphalive.pro/api/front/partners");
-          if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-          }
-      
-          const data = await response.json();
-          serPartner(data.data);
-        } catch (err) {
-          setError(err.message);
-        } finally {
-          setLoading(false);
+  useEffect(() => {
+    const getProducts = async () => {
+      setLoading(true);
+      try {
+        const response = await fetch(`${baseUrl}api/front/partners`);
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
         }
-      };
-  
-      getProducts();
-    }, []);
+
+        const data = await response.json();
+        serPartner(data.data);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    getProducts();
+  }, []);
 
   const settings = {
     infinite: true,
@@ -64,7 +65,13 @@ export default function BrandSlider() {
         <div className="row pb-3">
           <Slider {...settings}>
             {partner?.map((image, index) => {
-              return <img key={index} src={image?.photo} style={{height: "50px"}} />;
+              return (
+                <img
+                  key={index}
+                  src={image?.photo}
+                  style={{ height: "50px" }}
+                />
+              );
             })}
           </Slider>
         </div>

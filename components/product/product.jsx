@@ -29,11 +29,12 @@ export default function AllProduct() {
 
   const [productss, setProducts] = useState([]);
   // console.log(productss, "Fetched products... mega menue");
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
   const fetchProducts = async () => {
-    let apiUrl = `https://foundation.alphalive.pro/api/front/products/category/${category}`;
+    let apiUrl = `${baseUrl}api/front/products/category/${category}`;
     if (subcategory) {
-      apiUrl += `?subcategory=${subcategory}`; // Correct query param format
+      apiUrl += `?subcategory=${subcategory}`;
     }
 
     try {

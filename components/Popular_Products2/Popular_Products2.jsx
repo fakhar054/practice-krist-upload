@@ -9,11 +9,12 @@ export default function Popular_Products2() {
   const [categories, setCategories] = useState([]);
   // console.log(categories, "cateiiiii")
 
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
   // general settings
   const popularCategories = async () => {
     try {
       const response = await fetch(
-        "https://foundation.alphalive.pro/api/front/popular/categories", // Parameters in URL",
+        `${baseUrl}api/front/popular/categories`, // Parameters in URL",
         {
           method: "GET",
           headers: {

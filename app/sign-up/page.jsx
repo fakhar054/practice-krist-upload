@@ -44,7 +44,6 @@ export default function Page() {
 
     // try {
     //   const response = await fetch(
-    //     "https://foundation.alphalive.pro/api/user/registration",
     //     {
     //       method: "POST",
     //       headers: { "Content-Type": "application/json" },

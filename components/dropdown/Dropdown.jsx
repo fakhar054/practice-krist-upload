@@ -22,7 +22,9 @@ export default function Dropdown() {
   const [filterBySize, setFilterBySize] = useState(true);
 
   const [categories, setCategories] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState(category || "Electronic");
+  const [selectedCategory, setSelectedCategory] = useState(
+    category || "Electronic"
+  );
   const [selectedColor, setSelectedColor] = useState("");
   const [selectedSize, setSelectedSize] = useState("S");
   const [priceRange, setPriceRange] = useState([20, 10000]);
@@ -36,12 +38,13 @@ export default function Dropdown() {
   ];
   const sizes = ["S", "M", "L", "XL", "XXL"];
 
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
   // Fetch categories from API
   useEffect(() => {
     const fetchCategories = async () => {
       setLoading(true);
       try {
-        const response = await fetch("https://foundation.alphalive.pro/api/front/categories");
+        const response = await fetch(`${baseUrl}api/front/categories`);
         const data = await response.json();
         if (data.status && Array.isArray(data.data)) {
           setCategories(data.data);
@@ -64,7 +67,8 @@ export default function Dropdown() {
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
 
-    const category_name = params.get("category_name") || category || "Electronic";
+    const category_name =
+      params.get("category_name") || category || "Electronic";
     const color = params.get("color") || "";
     const size = params.get("size") || "S";
     const min_price = parseInt(params.get("min_price") || 20);
@@ -76,7 +80,6 @@ export default function Dropdown() {
     setPriceRange([min_price, max_price]);
     setHasInitializedFromUrl(true); // ✅ Set flag to true when done
   }, []);
-
 
   useEffect(() => {
     if (!hasInitializedFromUrl) return;
@@ -93,54 +96,67 @@ export default function Dropdown() {
 
     const queryParams = new URLSearchParams(updatedFilters).toString();
     window.history.pushState({}, "", `?${queryParams}`);
-
-  }, [selectedCategory, selectedColor, selectedSize, priceRange, hasInitializedFromUrl]);
-
+  }, [
+    selectedCategory,
+    selectedColor,
+    selectedSize,
+    priceRange,
+    hasInitializedFromUrl,
+  ]);
 
   return (
     <div className="Product_Categories">
       {/* Category Filter */}
-      <div className="heading_icon" onClick={() => setCategoriesOpen(!categoriesOpen)}>
+      <div
+        className="heading_icon"
+        onClick={() => setCategoriesOpen(!categoriesOpen)}
+      >
         <h3>Product Categories</h3>
         <RiArrowDropDownLine className="drop_down_icon" />
       </div>
 
       {categoriesOpen && (
         <ul>
-          {loading ? (
-            // Show 10 skeleton items while loading
-            [...Array(10)].map((_, index) => (
-              <li key={index}>
-                <div
-                  className="skeleton-line"
-                  style={{
-                    height: "18px",
-                    width: "80%",
-                    borderRadius: "4px",
-                    marginBottom: "8px",
-                    background: "#e0e0e0",
-                  }}
-                ></div>
-              </li>
-            ))
-          ) : (
-            (showAllCategories ? categories : categories.slice(0, 10)).map((category) => (
-              <li key={category.id}>
-                <input
-                  type="radio"
-                  id={category.name}
-                  name="category"
-                  checked={selectedCategory === category.name}
-                  onChange={() => setSelectedCategory(category.name)}
-                />
-                <label htmlFor={category.name}>{category.name}</label>
-              </li>
-            ))
-          )}
+          {loading
+            ? // Show 10 skeleton items while loading
+              [...Array(10)].map((_, index) => (
+                <li key={index}>
+                  <div
+                    className="skeleton-line"
+                    style={{
+                      height: "18px",
+                      width: "80%",
+                      borderRadius: "4px",
+                      marginBottom: "8px",
+                      background: "#e0e0e0",
+                    }}
+                  ></div>
+                </li>
+              ))
+            : (showAllCategories ? categories : categories.slice(0, 10)).map(
+                (category) => (
+                  <li key={category.id}>
+                    <input
+                      type="radio"
+                      id={category.name}
+                      name="category"
+                      checked={selectedCategory === category.name}
+                      onChange={() => setSelectedCategory(category.name)}
+                    />
+                    <label htmlFor={category.name}>{category.name}</label>
+                  </li>
+                )
+              )}
 
           {categories.length > 10 && (
             <button
-              className="" style={{ margin: "0px", border: "none", background: "transparent", textDecoration: "underline" }}
+              className=""
+              style={{
+                margin: "0px",
+                border: "none",
+                background: "transparent",
+                textDecoration: "underline",
+              }}
               onClick={() => setShowAllCategories(!showAllCategories)}
             >
               {showAllCategories ? "See Less" : "See More"}
@@ -149,9 +165,11 @@ export default function Dropdown() {
         </ul>
       )}
 
-
       {/* Price Filter */}
-      <div className="heading_icon" onClick={() => setFilterByPrice(!filterByPrice)}>
+      <div
+        className="heading_icon"
+        onClick={() => setFilterByPrice(!filterByPrice)}
+      >
         <h3>Filter by Price</h3>
         <RiArrowDropDownLine className="drop_down_icon" />
       </div>
@@ -170,14 +188,16 @@ export default function Dropdown() {
       )} */}
       {filterByPrice && (
         <div className="slider-container">
-          <div className="slider-value">Price: ${priceRange[0]} - ${priceRange[1]}</div>
+          <div className="slider-value">
+            Price: ${priceRange[0]} - ${priceRange[1]}
+          </div>
           <Slider
             className="custom-slider"
             value={priceRange}
             onChange={(_, newValue) => setPriceRange(newValue)} // Just update local state
             onChangeCommitted={(_, newValue) => {
               setPriceRange(newValue);
-              setFilters(prev => ({
+              setFilters((prev) => ({
                 ...prev,
                 min_price: newValue[0],
                 max_price: newValue[1],
@@ -191,7 +211,10 @@ export default function Dropdown() {
       )}
 
       {/* Color Filter */}
-      <div className="heading_icon" onClick={() => setFilterByColor(!filterByColor)}>
+      <div
+        className="heading_icon"
+        onClick={() => setFilterByColor(!filterByColor)}
+      >
         <h3>Filter by Color</h3>
         <RiArrowDropDownLine className="drop_down_icon" />
       </div>
@@ -206,19 +229,23 @@ export default function Dropdown() {
                 checked={selectedColor === color.code}
                 onChange={() => setSelectedColor(color.code)} // set the color code in state
               />
-              <label htmlFor={color.code}>{color.name}</label> {/* show readable name */}
+              <label htmlFor={color.code}>{color.name}</label>{" "}
+              {/* show readable name */}
             </li>
           ))}
         </ul>
       )}
 
       {/* Size Filter */}
-      <div className="heading_icon" onClick={() => setFilterBySize(!filterBySize)}>
+      <div
+        className="heading_icon"
+        onClick={() => setFilterBySize(!filterBySize)}
+      >
         <h3>Filter by Size</h3>
         <RiArrowDropDownLine className="drop_down_icon" />
       </div>
       {filterBySize && (
-        <ul >
+        <ul>
           {sizes.map((size) => (
             <li key={size}>
               <input

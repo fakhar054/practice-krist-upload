@@ -34,7 +34,6 @@
 //     const fetchData = async () => {
 //       setLoading(true);
 //       try {
-//         const baseUrl = "https://foundation.alphalive.pro/api/front/blogs";
 //         const url = slug ? `${baseUrl}?slug=${slug}` : baseUrl;
 
 //         const response = await fetch(url);
@@ -231,12 +230,13 @@ function BlogPageContent() {
   const blogsPerPage = 8;
   const searchParams = useSearchParams();
   const slug = searchParams.get("slug");
+  const url_base = process.env.NEXT_PUBLIC_BASE_URL;
 
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const baseUrl = "https://foundation.alphalive.pro/api/front/blogs";
+        const baseUrl = `${url_base}api/front/blogs`;
         const url = slug ? `${baseUrl}?slug=${slug}` : baseUrl;
 
         const response = await fetch(url);

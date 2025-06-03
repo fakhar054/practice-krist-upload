@@ -42,14 +42,12 @@ export default function Brands() {
     ],
   };
 
-
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const response = await fetch(
-          "https://foundation.alphalive.pro/api/front/categories"
-        );
+        const response = await fetch(`${baseUrl}api/front/categories`);
         if (!response.ok) {
           throw new Error("Failed to fetch data");
         }
@@ -69,47 +67,45 @@ export default function Brands() {
 
   return (
     <>
-      {
-        loading ? (
-          <>
-            <div className="container mt-4 pb-3 brands">
-              <div className="row">
-                <div className="product_list">
-                  <Slider {...settings}>
-                    {[...Array(5)].map((_, index) => (
-                      <div key={index} className="skeleton-product">
-                        <div className="skeleton-image mb-2"></div>
-                        <div className="skeleton-text w-75 mb-1"></div>
-                        <div className="skeleton-text w-50"></div>
-                      </div>
-                    ))}
-                  </Slider>
-                </div>
-              </div>
-              <hr />
-            </div>
-          </>
-        ) : (
-          <div className="container mt-4  pb-3 brands">
-            <div className="row ">
+      {loading ? (
+        <>
+          <div className="container mt-4 pb-3 brands">
+            <div className="row">
               <div className="product_list">
                 <Slider {...settings}>
-                  {data.map((item, index) => {
-                    return (
-                      <SingleProduct
-                        key={index}
-                        image_src={item.image}
-                        prod_name={item.name}
-                      />
-                    );
-                  })}
+                  {[...Array(5)].map((_, index) => (
+                    <div key={index} className="skeleton-product">
+                      <div className="skeleton-image mb-2"></div>
+                      <div className="skeleton-text w-75 mb-1"></div>
+                      <div className="skeleton-text w-50"></div>
+                    </div>
+                  ))}
                 </Slider>
               </div>
             </div>
             <hr />
           </div>
-        )
-      }
+        </>
+      ) : (
+        <div className="container mt-4  pb-3 brands">
+          <div className="row ">
+            <div className="product_list">
+              <Slider {...settings}>
+                {data.map((item, index) => {
+                  return (
+                    <SingleProduct
+                      key={index}
+                      image_src={item.image}
+                      prod_name={item.name}
+                    />
+                  );
+                })}
+              </Slider>
+            </div>
+          </div>
+          <hr />
+        </div>
+      )}
     </>
   );
 }

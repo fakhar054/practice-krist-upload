@@ -9,10 +9,11 @@ import { useEffect, useState } from "react";
 export default function FeaturedProducts({ category, currency }) {
   const [products, setProducts] = useState();
 
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
   useEffect(() => {
     if (!category) return;
     const fetchProducts = async () => {
-      let apiUrl = `https://foundation.alphalive.pro/api/front/products/category/${category}`;
+      let apiUrl = `${baseUrl}api/front/products/category/${category}`;
 
       try {
         const response = await fetch(apiUrl);

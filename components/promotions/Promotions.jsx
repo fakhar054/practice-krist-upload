@@ -28,14 +28,16 @@ export default function Promotions() {
     fetchCategories();
   }, []);
 
-
   const [procCat, setProcat] = useState();
 
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
   const fetchCategoryProducts = async (categoryName) => {
     setLoading(true);
     try {
       const response = await fetch(
-        `https://foundation.alphalive.pro/api/front/products/category/${encodeURIComponent(categoryName)}`
+        `${baseUrl}api/front/products/category/${encodeURIComponent(
+          categoryName
+        )}`
       );
       // console.log(response, "response cate product")
       const data = await response.json();
@@ -53,15 +55,12 @@ export default function Promotions() {
     fetchCategoryProducts(categoryName); // Pass category name only
   };
 
-
   const [productss, setProducts] = useState();
 
   useEffect(() => {
     const getProducts = async () => {
       try {
-        const response = await fetch(
-          "https://foundation.alphalive.pro/api/front/deal-of-the-day"
-        );
+        const response = await fetch(`${baseUrl}api/front/deal-of-the-day`);
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
@@ -69,7 +68,7 @@ export default function Promotions() {
         const data = await response.json();
         setProducts(data.data);
       } catch (err) {
-        console.log(err.message)
+        console.log(err.message);
       }
     };
 
@@ -97,25 +96,23 @@ export default function Promotions() {
             >
               Recommendations
             </p>
-            {
-              loading ? (
-                <>
-                  {[...Array(4)].map((_, index) => (
-                    <p key={index} className="skeleton-tab mb-2"></p>
-                  ))}
-                </>
-              ) : (
-                categories?.slice(0, 4).map((category, index) => (
-                  <p
-                    key={index}
-                    className={activeTab === category.name ? "active" : ""}
-                    onClick={() => handleCategoryClick(category.name)}
-                  >
-                    {category?.name}
-                  </p>
-                ))
-              )
-            }
+            {loading ? (
+              <>
+                {[...Array(4)].map((_, index) => (
+                  <p key={index} className="skeleton-tab mb-2"></p>
+                ))}
+              </>
+            ) : (
+              categories?.slice(0, 4).map((category, index) => (
+                <p
+                  key={index}
+                  className={activeTab === category.name ? "active" : ""}
+                  onClick={() => handleCategoryClick(category.name)}
+                >
+                  {category?.name}
+                </p>
+              ))
+            )}
           </div>
         </div>
       </section>
@@ -137,14 +134,19 @@ export default function Promotions() {
                           <br /> Office & Work Laptop */}
                           {productss?.title}
                         </h3>
-                        <a href={productss?.shop_link} target="_blank" style={{ textDecoration: "none" }}>
+                        <a
+                          href={productss?.shop_link}
+                          target="_blank"
+                          style={{ textDecoration: "none" }}
+                        >
                           <div className="text_icon_div">
                             <p id="shop_now">Shop Now</p>
                             <img
                               src="/assets/images/common/icons/arrow_img.png"
                               alt=""
                             />
-                          </div></a>
+                          </div>
+                        </a>
                         {/* <p className="mt-2" id="latest">
                           Power & Versatility
                         </p> */}
@@ -152,7 +154,11 @@ export default function Promotions() {
                       </div>
                       <div className="col-md-6 img_col width_50">
                         <img
-                          src={productss ? productss?.image : "/assets/images/products/computer1.png"}
+                          src={
+                            productss
+                              ? productss?.image
+                              : "/assets/images/products/computer1.png"
+                          }
                           alt=""
                         />
                       </div>
@@ -201,9 +207,8 @@ export default function Promotions() {
           )}
 
           <div className="popular_products2 pb-3">
-            {
-              loading ? (
-                [...Array(4)].map((_, index) => (
+            {loading
+              ? [...Array(4)].map((_, index) => (
                   <div className="single_card2 skeleton" key={index}>
                     <div className="img_div skeleton-box" />
                     <p className="skeleton-line mt-2" />
@@ -217,13 +222,18 @@ export default function Promotions() {
                     </div>
                   </div>
                 ))
-              ) : procCat?.length > 0 ? (
-                procCat.map((product, index) => (
+              : procCat?.length > 0
+              ? procCat.map((product, index) => (
                   <div className="single_card2" key={index}>
-                    <div className="img_div" onClick={() => handleNavigation(product.id)}>
+                    <div
+                      className="img_div"
+                      onClick={() => handleNavigation(product.id)}
+                    >
                       <img src={product?.thumbnail} />
                     </div>
-                    <p style={{ textAlign: "left", margin: "10px 0px" }}>{product?.title}</p>
+                    <p style={{ textAlign: "left", margin: "10px 0px" }}>
+                      {product?.title}
+                    </p>
                     <div className="review_div" style={{ textAlign: "left" }}>
                       <div className="div_1">
                         <p>
@@ -232,18 +242,16 @@ export default function Promotions() {
                       </div>
                       <div className="price_div">
                         <p>
-                          <strong>{currency?.sign}{product?.current_price}</strong>
+                          <strong>
+                            {currency?.sign}
+                            {product?.current_price}
+                          </strong>
                         </p>
                       </div>
                     </div>
                   </div>
                 ))
-              ) : (
-                ""
-              )
-            }
-
-
+              : ""}
           </div>
         </div>
       </section>

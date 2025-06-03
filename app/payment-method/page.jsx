@@ -135,41 +135,39 @@ export default function PaymentMethod() {
       };
 
       // console.log(item_o, "chk datatatata ");
+      const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
-      const response = await fetch(
-        "https://foundation.alphalive.pro/api/front/checkout",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            full_name,
-            email,
-            password,
-            billing_street,
-            billing_city,
-            billing_country,
-            billing_phone,
-            billing_postal_code,
-            shipping_street,
-            shipping_city,
-            shipping_country,
-            shipping_phone,
-            shipping_postal_code,
-            customer_type,
-            tax_code,
-            company_name,
-            vat_number,
-            same_as,
-            items: transformedItems,
-            discount: discountAmount,
-            grand_total: grandTotal,
-            subtotal,
-            total_quantity: totalQuantity,
-            tax: subtotal * 0.22,
-            user_id,
-          }),
-        }
-      );
+      const response = await fetch(`${baseUrl}api/front/checkout`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          full_name,
+          email,
+          password,
+          billing_street,
+          billing_city,
+          billing_country,
+          billing_phone,
+          billing_postal_code,
+          shipping_street,
+          shipping_city,
+          shipping_country,
+          shipping_phone,
+          shipping_postal_code,
+          customer_type,
+          tax_code,
+          company_name,
+          vat_number,
+          same_as,
+          items: transformedItems,
+          discount: discountAmount,
+          grand_total: grandTotal,
+          subtotal,
+          total_quantity: totalQuantity,
+          tax: subtotal * 0.22,
+          user_id,
+        }),
+      });
 
       const data = await response.json();
       console.log("datatatadata.data", data.data);

@@ -7,6 +7,7 @@ import { AiOutlineBorderlessTable } from "react-icons/ai";
 export const ResponseContext = createContext();
 
 export const ResponseProvider = ({ children }) => {
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
   const [cart, setCart] = useState([]);
   console.log("i am console..");
 
@@ -118,7 +119,7 @@ export const ResponseProvider = ({ children }) => {
       }
 
       const response = await fetch(
-        `https://foundation.alphalive.pro/api/user/wishlists?user_id=${userId}`,
+        `${baseUrl}api/user/wishlists?user_id=${userId}`,
         {
           method: "GET",
           headers: {
@@ -147,7 +148,7 @@ export const ResponseProvider = ({ children }) => {
     }
     try {
       const response = await fetch(
-        `https://foundation.alphalive.pro/api/user/wishlist/add`, // Parameters in UR",
+        `${baseUrl}api/user/wishlist/add`, // Parameters in UR",
         {
           method: "POST",
           headers: {
@@ -184,7 +185,7 @@ export const ResponseProvider = ({ children }) => {
         return;
       }
       const response = await fetch(
-        `https://foundation.alphalive.pro/api/user/wishlist/remove/${wishlistItem.id}?user_id=${userId}&product_id=${productId}`, // Parameters in URL",
+        `${baseUrl}api/user/wishlist/remove/${wishlistItem.id}?user_id=${userId}&product_id=${productId}`, // Parameters in URL",
         {
           method: "GET",
           headers: {
@@ -236,7 +237,7 @@ export const ResponseProvider = ({ children }) => {
     try {
       const queryParams = new URLSearchParams(filters).toString();
       const response = await fetch(
-        `https://foundation.alphalive.pro/api/front/filter-products?${queryParams}`
+        `${baseUrl}api/front/filter-products?${queryParams}`
       );
       const data = await response.json();
       setProducts(data.products);
@@ -257,7 +258,7 @@ export const ResponseProvider = ({ children }) => {
     setLoading(true);
     try {
       const response = await axios.get(
-        `https://foundation.alphalive.pro/api/user/addresses/${userId}`
+        `${baseUrl}api/user/addresses/${userId}`
       );
       setAddresses(response.data);
     } catch (error) {
@@ -270,7 +271,7 @@ export const ResponseProvider = ({ children }) => {
   const addAddress = async (newAddress) => {
     try {
       const response = await axios.post(
-        "https://foundation.alphalive.pro/api/user/addresses/store",
+        `${baseUrl}api/user/addresses/store`,
         newAddress
       );
       // console.log(response, "response address ka");
@@ -285,7 +286,7 @@ export const ResponseProvider = ({ children }) => {
   const updateAddress = async (address_id, updatedData) => {
     try {
       await axios.put(
-        `https://foundation.alphalive.pro/api/user/addresses/update/${address_id}`,
+        `${baseUrl}api/user/addresses/update/${address_id}`,
         updatedData
       );
       setAddresses((prev) =>
@@ -302,9 +303,7 @@ export const ResponseProvider = ({ children }) => {
   // Delete address
   const deleteAddress = async (address_id) => {
     try {
-      await axios.delete(
-        `https://foundation.alphalive.pro/api/user/addresses/delete/${address_id}`
-      );
+      await axios.delete(`${baseUrl}api/user/addresses/delete/${address_id}`);
       setAddresses((prev) => prev.filter((addr) => addr.id !== address_id));
     } catch (error) {
       console.error("Error deleting address:", error);
@@ -318,7 +317,7 @@ export const ResponseProvider = ({ children }) => {
   const orders = async (userId) => {
     try {
       const response = await axios.get(
-        `https://foundation.alphalive.pro/api/user/orders?user_id=${userId}`
+        `${baseUrl}api/user/orders?user_id=${userId}`
       );
       // console.log(response, "order,,,,,")
       setOrdersData(response.data.data);
@@ -335,7 +334,7 @@ export const ResponseProvider = ({ children }) => {
   const applyCoupon = async (coupon, subtotal) => {
     try {
       const res = await axios.get(
-        `https://foundation.alphalive.pro/api/front/get/coupon-code?coupon=${coupon}`
+        `${baseUrl}api/front/get/coupon-code?coupon=${coupon}`
       );
       // console.log(res, "response.....a.a.a.a.");
       const { type, price } = res.data.data;
@@ -382,9 +381,7 @@ export const ResponseProvider = ({ children }) => {
     setSearchedLoading(true);
     try {
       const response = await fetch(
-        `https://foundation.alphalive.pro/api/front/search?search=${encodeURIComponent(
-          searchQuery
-        )}`
+        `${baseUrl}api/front/search?search=${encodeURIComponent(searchQuery)}`
       );
       if (!response.ok) throw new Error("Error fetching data");
       const data = await response.json();
@@ -402,7 +399,7 @@ export const ResponseProvider = ({ children }) => {
   const generalSettings = async () => {
     try {
       const response = await fetch(
-        "https://foundation.alphalive.pro/api/front/general-settings", // Parameters in URL",
+        `${baseUrl}api/front/general-settings", // Parameters in URL`,
         {
           method: "GET",
           headers: {
@@ -428,7 +425,7 @@ export const ResponseProvider = ({ children }) => {
   const Currency = async () => {
     try {
       const response = await fetch(
-        "https://foundation.alphalive.pro/api/front/system-currency", // Parameters in URL",
+        `${baseUrl}api/front/system-currency`, // Parameters in URL",
         {
           method: "GET",
           headers: {
@@ -451,15 +448,12 @@ export const ResponseProvider = ({ children }) => {
   const [stripekey, setStripeKey] = useState();
   const StripeKeys = async () => {
     try {
-      const response = await fetch(
-        "https://foundation.alphalive.pro/api/front/payment-gateways",
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const response = await fetch(`${baseUrl}api/front/payment-gateways`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
       const data = await response.json();
 

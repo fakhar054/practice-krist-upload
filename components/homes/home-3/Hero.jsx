@@ -25,12 +25,11 @@ export default function Hero() {
   const [error, setError] = useState(null);
   const sliderRef = useRef(null);
 
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
   useEffect(() => {
     const getProducts = async () => {
       try {
-        const response = await fetch(
-          "https://foundation.alphalive.pro/api/front/latest-products"
-        );
+        const response = await fetch(`${baseUrl}api/front/latest-products`);
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
@@ -77,7 +76,9 @@ export default function Hero() {
   };
 
   const truncateText = (text, maxLength = 100) => {
-    return text.length > maxLength ? text.substring(0, maxLength) + "..." : text;
+    return text.length > maxLength
+      ? text.substring(0, maxLength) + "..."
+      : text;
   };
 
   return (
@@ -122,7 +123,10 @@ export default function Hero() {
                         </div>
                       </div>
 
-                      <div className="col-lg-6 img_div"  style={{ position: "relative" }}>
+                      <div
+                        className="col-lg-6 img_div"
+                        style={{ position: "relative" }}
+                      >
                         <Skeleton
                           height={400}
                           width={"100%"}
@@ -143,7 +147,9 @@ export default function Hero() {
                       <div className="tick_sec_parent">
                         <div className="tick_single">
                           <MdOutlineDone className="icon_size" />
-                          <p>{currency?.sign} {item?.current_price}</p>
+                          <p>
+                            {currency?.sign} {item?.current_price}
+                          </p>
                         </div>
                       </div>
                       <div
@@ -159,7 +165,10 @@ export default function Hero() {
                       </div>
                     </div>
 
-                    <div className="col-lg-6 img_div" style={{ position: "relative" }}>
+                    <div
+                      className="col-lg-6 img_div"
+                      style={{ position: "relative" }}
+                    >
                       <img
                         src={
                           item?.thumbnail ||

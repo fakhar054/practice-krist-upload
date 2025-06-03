@@ -32,13 +32,12 @@ export default function ShopDetails1() {
   const [selectedSize, setSelectedSize] = useState(""); // New state for size
   const { id } = useParams();
 
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const res = await fetch(
-          `https://foundation.alphalive.pro/api/front/product/${id}/details`
-        );
+        const res = await fetch(`${baseUrl}api/front/product/${id}/details`);
         const result = await res.json();
         setData(result.data);
         setCartProducts({ [result.data.id]: 1 }); // Initialize quantity
