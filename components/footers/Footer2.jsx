@@ -19,9 +19,15 @@ import { MdOutlineEmail } from "react-icons/md";
 import { CiLocationOn } from "react-icons/ci";
 import toast from "react-hot-toast";
 import { ResponseContext } from "@/app/login/ResponseContext";
+import { useRouter } from "next/navigation";
 
 export default function Footer2() {
-  const { setting } = useContext(ResponseContext);
+  const router = useRouter();
+  const { setting, response_Context } = useContext(ResponseContext);
+
+  const footer_token = response_Context.token;
+  console.log("Response context in footer ", response_Context.token);
+
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -69,6 +75,14 @@ export default function Footer2() {
       toast.error("Error occurred, please try again.");
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleWishlistClick = () => {
+    if (footer_token) {
+      router.push("/my-wishlist");
+    } else {
+      router.push("/login");
     }
   };
 
@@ -121,9 +135,7 @@ export default function Footer2() {
                     <Link href="/login">Login</Link>
                   )}
                 </li>
-                <li>
-                  <Link href="/my-wishlist">My Wishlist</Link>
-                </li>
+                <li onClick={handleWishlistClick}>My Wishlist</li>
                 <li>
                   <Link href="/shop-cart">Checkout</Link>
                 </li>

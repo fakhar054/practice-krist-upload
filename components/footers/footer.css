@@ -13,6 +13,9 @@
   height: 28px;
   width: 28px;
 }
+#footer li {
+  cursor: pointer;
+}
 #footer .text_div {
   font-family: "Jost" !important;
 }
