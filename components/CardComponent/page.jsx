@@ -18,12 +18,29 @@ export default function Page() {
     router.push("/shop-cart");
   };
 
+  // console.log("Cartttt is isis....", cart);
+  // const getTotalAmount = () => {
+  //   return (
+  //     cart
+  //       ?.reduce((total, item) => total + item.current_price * item.quantity, 0)
+  //       .toFixed(2) || "0.00"
+  //   );
+  // };
+
   const getTotalAmount = () => {
-    return (
-      cart
-        ?.reduce((total, item) => total + item.current_price * item.quantity, 0)
-        .toFixed(2) || "0.00"
-    );
+    const total =
+      cart?.reduce((sum, item) => {
+        let s = item.current_price.replace(/[^\d.,-]+/g, ""); //
+        if (s.slice(-3).includes(",")) {
+          s = s.replace(/\./g, "").replace(/,/, ".");
+        } else {
+          s = s.replace(/,/g, "");
+        }
+        const price = parseFloat(s);
+        return sum + (isNaN(price) ? 0 : price * item.quantity);
+      }, 0) || 0;
+
+    return total.toFixed(2); // "1234.56"
   };
 
   return (
@@ -59,8 +76,9 @@ export default function Page() {
                       Quantity: {item?.quantity || "N/A"}
                     </p>
                     <p className="prod_title p-0 m-0">
-                      Price: {currency?.sign}
-                      {Number(item?.current_price || 0).toFixed(2)}
+                      {/* Price: {currency?.sign} */}
+                      Price:{item?.current_price}
+                      {/* {Number(item?.current_price || 0).toFixed(2)} */}
                     </p>
                     <div className="delete_div">
                       <div>

@@ -34,7 +34,6 @@ export default function Header2() {
       // setOpen(false);
     }, 1000);
   };
-  // const [showPopup, setShowPopup] = useState(false);
   const {
     cart,
     showPopup,
@@ -43,7 +42,7 @@ export default function Header2() {
     setAnimateWishlist,
     setting,
   } = useContext(ResponseContext);
-  
+
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -52,9 +51,6 @@ export default function Header2() {
     }
   }, []);
 
-  // const togglePopup = () => {
-  //   setShowPopup(!showPopup);
-  // };
   const handleMouseEnter = () => {
     setShowPopup(true);
   };
@@ -173,18 +169,13 @@ export default function Header2() {
                     <Image
                       className="dark:d-none"
                       alt="Lexend"
-                      // src={`${process.env.NEXT_PUBLIC_BASE_URL}${setting?.logo || "/assets/images/common/logo_main.png"}`}
                       src={"/assets/images/common/logo_main.png"}
                       width="117"
                       height="40"
                     />
                   </Link>
                 </div>
-                {/* <ul className="uc-navbar-nav gap-3 xl:gap-4 d-none lg:d-flex fw-medium ms-2">
-                  <Nav />
-                </ul> */}
               </div>
-              {/* <div className="uc-navbar-right"> */}
               <div className="main_input_div">
                 <input
                   type="text"
@@ -205,10 +196,12 @@ export default function Header2() {
                           onClick={() => {
                             setSearchQuery("");
                             router.push(`/shop-product-detail/${product.id}`);
+                            // router.push(
+                            //   `/search?query=${encodeURIComponent(
+                            //     product.title
+                            //   )}`
+                            // );
                           }}
-                          // onClick={() =>
-                          //   router.push(`/shop-product-detail/${product.id}`)
-                          // }
                         >
                           {product.title}
                         </li>
@@ -223,48 +216,6 @@ export default function Header2() {
               </div>
               <div className="icon_div_main">
                 <div className="icons">
-                  {/* <CiSearch
-                      className="icon_size icon_size_none cursor-pointer"
-                      onClick={toggleSearch}
-                    />
-
-                    <div className={`search_div`}>
-                      <FaSearch className="search_icon" />
-                      <input
-                        type="text"
-                        placeholder="Search..."
-                        className="search_input"
-                        onChange={(e) => setSearchQuery(e.target.value)}
-                      />
-                    </div> */}
-
-                  {/* <div className="account-wrapper">
-                    {isLoggedIn ? (
-                      <p
-                        className="account-label"
-                        ref={dropdownRef}
-                        onMouseEnter={() => setOpen(true)}
-                        onMouseLeave={() => setOpen(false)}
-                      >
-                        My Account
-                      </p>
-                    ) : (
-                      <Link className="text-none fw-medium" href={`/login`}>
-                        <p className="account-label">Login</p>
-                      </Link>
-                    )}
-                    <div className="account-dropdown">
-                      <Link href="/dashboard">Dashboard</Link>
-                      <Link href="/personal-info">Personal Information</Link>
-                      <Link href="/orders">Orders</Link>
-                      <Link href="/my-wishlist">Wishlist</Link>
-                      <Link href="/my-address">Addresses</Link>
-                      <Link href="/settings">Settings</Link>
-                      <Link href="/login" onClick={handleAuth}>
-                        Logout
-                      </Link>
-                    </div>
-                  </div> */}
                   <div
                     className="account-wrapper"
                     onMouseEnter={() => setOpen(true)}
@@ -294,26 +245,9 @@ export default function Header2() {
                     )}
                   </div>
 
-                  {/* {isLoggedIn? (<Link href="/personal-info">
-                      <img className="icon_size cursor-pointer" style={{ marginLeft: "0px", width: "22px", height: "22px" }} src="/assets/images/user.png" alt="" />
-                    </Link>) : ("")} */}
-
                   {isLoggedIn ? (
                     <Link href="/my-wishlist">
-                      {/* <CiHeart className="icon_size cursor-pointer" style={{ position: "relative" }} />
-                      <span className="cart_counter">{wishlist ? wishlist?.length : "0"}</span> */}
                       <div className="relative heart-container">
-                        {/* <CiHeart
-                          className={`icon_size  cursor-pointer transition-transform duration-300 ${animateWishlist ? "scale-150 text-pink-700 fill-blue-500" : ""
-                            }`} style={{width: "40px", height:"40px"}}
-                        />
-                        {animateWishlist && (
-                          <div className="orbit-dots">
-                            {[...Array(8)].map((_, i) => (
-                              <span key={i} className={`dot dot${i + 1}`}></span>
-                            ))}
-                          </div>
-                        )} */}
                         {animateWishlist ? (
                           <FaHeart
                             className="icon_size cursor-pointer transition-transform duration-300 scale-150 text-red-600"
@@ -337,7 +271,6 @@ export default function Header2() {
                           height: "40px",
                         }}
                       />
-                      {/* <span className="cart_counter">{wishlist ? wishlist?.length : "0"}</span> */}
                     </Link>
                   )}
                   <div
@@ -375,15 +308,6 @@ export default function Header2() {
                 </div>
               </div>
 
-              {/* <div className="d-none lg:d-block" onClick={handleAuth}>
-                  <Link className="text-none fw-medium " href={`/login`}>
-                    
-                    <span className="btn_black">
-                      {isLoggedIn ? "Logout" : "Login"}
-                    </span>
-                  </Link>
-                </div> */}
-
               <a
                 className="d-block lg:d-none uc-icon uc-navbar-toggle-icon"
                 onClick={openMobileMenu}
@@ -409,10 +333,6 @@ export default function Header2() {
           </ul>
         </nav>
       </header>
-      {/* <div
-        className="uc-sticky-placeholder"
-        style={{ height: 0, width: "100% !important", margin: 0 }}
-      />{" "} */}
     </>
   );
 }

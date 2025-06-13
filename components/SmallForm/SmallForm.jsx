@@ -21,11 +21,31 @@ export default function SmallForm() {
     setShowDiscountInput((prevState) => !prevState);
   };
 
+  // console.log("Cartt is is from small...", cart);
+
+  // const getTotalAmount = () => {
+  //   return cart?.reduce(
+  //     (total, item) => total + item.current_price * item.quantity,
+  //     0
+  //   );
+  // };
+
   const getTotalAmount = () => {
-    return cart?.reduce(
-      (total, item) => total + item.current_price * item.quantity,
-      0
-    );
+    return (
+      cart?.reduce((total, item) => {
+        let priceStr = item.current_price.replace(/[^\d.,-]+/g, ""); // Remove non-numeric, except . , -
+
+        // Handle European-style prices (e.g., 1.903,87 -> 1903.87)
+        if (priceStr.slice(-3).includes(",")) {
+          priceStr = priceStr.replace(/\./g, "").replace(",", ".");
+        } else {
+          priceStr = priceStr.replace(/,/g, "");
+        }
+
+        const price = parseFloat(priceStr);
+        return total + (isNaN(price) ? 0 : price * item.quantity);
+      }, 0) || 0
+    ).toFixed(2);
   };
 
   const [inputCode, setInputCode] = useState("");
@@ -66,8 +86,8 @@ export default function SmallForm() {
                 Quantity: {item?.quantity || "N/A"}
               </p>
               <p className="prod_title p-0 m-0">
-                Price: {currency?.sign}
-                {Number(item?.current_price).toFixed(2)}
+                Price:{item.current_price}
+                {/* {Number(item?.current_price)} */}
               </p>
               <div className="delete_div">
                 <div>
@@ -112,8 +132,8 @@ export default function SmallForm() {
             )}
             <span id="subtotal">
               {" "}
-              {currency?.sign}
-              {subtotal.toFixed(2)}
+              {/* {currency?.sign} */}
+              {subtotal}
             </span>
           </div>
         </div>

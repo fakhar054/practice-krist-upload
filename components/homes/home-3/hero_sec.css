@@ -4,7 +4,8 @@
   min-height: calc(100vh - 80px);
   background-color: #ececec;
   /* background-color: red; */
-  margin-top: 144px;
+  /* margin-top: 144px; */
+  margin-top: 127px;
   font-family: "Jost" !important;
   display: flex;
   align-items: center;
