@@ -33,9 +33,8 @@ export default function SmallForm() {
   const getTotalAmount = () => {
     return (
       cart?.reduce((total, item) => {
-        let priceStr = item.current_price.replace(/[^\d.,-]+/g, ""); // Remove non-numeric, except . , -
+        let priceStr = item.current_price.replace(/[^\d.,-]+/g, "");
 
-        // Handle European-style prices (e.g., 1.903,87 -> 1903.87)
         if (priceStr.slice(-3).includes(",")) {
           priceStr = priceStr.replace(/\./g, "").replace(",", ".");
         } else {
